@@ -2,13 +2,13 @@
 - name: Create media group
   group:
     name: "{{ media_group_name }}"
-    gid: "{{ media_group_gid }}"
+    gid: "{{ media_group_gid | int }}"
     state: present
 - name: Create media user
   user:
     name: "{{ media_user_name }}"
     comment: Media user created for the media server
-    uid: "{{ media_user_uid }}"
+    uid: "{{ media_user_uid | int }}"
     group: "{{ media_group_name }}"
     home: "/home/{{ media_user_name }}"
     state: present

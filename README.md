@@ -6,7 +6,7 @@
 - `NAS`         : Network attached storage server
 
 
-## Set up ssh keybased login to the media-server
+## Set up ssh key based login to the media-server
 
 1. Generate a ssh keypair if you don't already have it in your host-server. (Check using `ls ~/.ssh`)
 ```shell script
