@@ -2,13 +2,13 @@
  - name: Create media group
    ansible.builtin.group:
     name: "{{ media_group_name }}"
-    gid: 1300
+    gid: "{{ media_group_gid }}"
     state: present
  - name: Create media user
    ansible.builtin.user:
     name: "{{ media_user_name }}"
     comment: Media user created for the media server
-    uid: 1300
+    uid: "{{ media_user_uid }}"
     group: "{{ media_group_name }}"
     home: "/home/{{ media_user_name }}"
     state: present

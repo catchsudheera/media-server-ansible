@@ -1,3 +1,5 @@
 ---
 media_user_name: "{{ local_media_user }}"
+media_user_uid: "{{ local_media_uid }}"
 media_group_name: "{{ local_media_group }}"
+media_group_gid: "{{ local_media_gid }}"

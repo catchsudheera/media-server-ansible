@@ -1,4 +1,6 @@
 ---
 ansible_user: pi
 local_media_user: media-user
+local_media_uid: 1003
 local_media_group: media-group
+local_media_gid: 1002

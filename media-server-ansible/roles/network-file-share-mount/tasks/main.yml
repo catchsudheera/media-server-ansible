@@ -14,12 +14,10 @@
 - name: Install NFS mount systemd unit file
   template: src=network_mount_systemd_unit_template.j2 dest=/etc/systemd/system/{{ escaped_mount_path.stdout }}.mount
 
-- name: Reload systemd
-  command: systemctl daemon-reload
+- name: Mount systemd enable and start
+  ansible.builtin.systemd:
+    name: '{{escaped_mount_path.stdout}}.mount'
+    enabled: yes
+    state: started
 
-- name: Enable NFS mount service
-  command: 'systemctl enable {{escaped_mount_path.stdout}}.mount'
-
-- name: Start NFS mount service
-  command: 'systemctl start {{escaped_mount_path.stdout}}.mount'
 

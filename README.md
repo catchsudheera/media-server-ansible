@@ -8,17 +8,17 @@
 ## Set up ssh keybased login to the media-server
 
 1. Generate a ssh keypair if you don't already have it in your host-server. (Check using `ls ~/.ssh`)
-```bash
+```shell script
 ssh-keygen
 ```
 2. Copy the public key to the media-server
 
-```bash 
+```shell script 
 ssh-copy-id username@media-server-ip-or-hostname
 ```
 
 3. Test with logging in
-```bash
+```shell script
 ssh username@media-server-ip-or-hostname
 ```
 
@@ -27,3 +27,6 @@ ssh username@media-server-ip-or-hostname
 ## Configure ansible playbook
 
 ## Run Ansible Playbook
+```shell script
+ansible-playbook site.yml -i inventories/default/hosts.ini
+```
