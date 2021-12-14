@@ -1,0 +1,6 @@
+---
+nfs_server_address: freenas.local
+remote_dir_path: /mnt/media-pool/media-test
+local_mount_path: /mnt/media_share
+mount_dir_user: "{{ local_media_user}}"
+mount_dir_group: "{{ local_media_group }}"

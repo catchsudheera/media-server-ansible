@@ -1,0 +1,3 @@
+---
+media_user_name: "{{ local_media_user }}"
+media_group_name: "{{ local_media_group }}"

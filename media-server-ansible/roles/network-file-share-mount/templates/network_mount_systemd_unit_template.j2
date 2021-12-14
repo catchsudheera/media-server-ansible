@@ -1,0 +1,12 @@
+[Unit]
+Description=Media Share mount
+After=network.target
+
+[Mount]
+What={{ nfs_server_address }}:{{ remote_dir_path }}
+Where={{ local_mount_path }}
+Type=nfs
+Options=defaults,users
+
+[Install]
+WantedBy=multi-user.target

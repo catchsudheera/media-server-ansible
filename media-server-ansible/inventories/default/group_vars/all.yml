@@ -1,0 +1,4 @@
+---
+ansible_user: pi
+local_media_user: media-user
+local_media_group: media-group
