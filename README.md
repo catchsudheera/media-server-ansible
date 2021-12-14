@@ -3,6 +3,7 @@
 ## Terminology
 - `media-server` : The remote server you are about to configure
 - `host-server` : The host machine you are working on
+- `NAS`         : Network attached storage server
 
 
 ## Set up ssh keybased login to the media-server
@@ -25,6 +26,12 @@ ssh username@media-server-ip-or-hostname
 ## Install Ansible in your host machine
 
 ## Configure ansible playbook
+
+### Network share mount
+If using a NFS share mount role, make sure on the NAS server side,
+1. Create dedicated user and a group on the NAS server and note down `uid` and `gid`
+2. Use user/group mapping when creating the share. (e.g : `Mapall User` and `Mapall Group` in TrueNAS)
+3. Update `local_media_uid` and `local_media_gid` in `inventories/default/group_vars/all.yml` accordingly.
 
 ## Run Ansible Playbook
 ```shell script

@@ -1,14 +1,39 @@
 ---
- - name: Create media group
-   ansible.builtin.group:
+- name: Create media group
+  group:
     name: "{{ media_group_name }}"
     gid: "{{ media_group_gid }}"
     state: present
- - name: Create media user
-   ansible.builtin.user:
+- name: Create media user
+  user:
     name: "{{ media_user_name }}"
     comment: Media user created for the media server
     uid: "{{ media_user_uid }}"
     group: "{{ media_group_name }}"
     home: "/home/{{ media_user_name }}"
     state: present
+- name: Install a list of packages
+  apt:
+    name: "{{ pkgstoinstall }}"
+    update_cache: yes
+- name: Remove python-configparser package
+  apt:
+    name: python-configparser
+    state: absent
+- name: Get docker install script
+  get_url:
+    url: https://get.docker.com
+    dest: /tmp/get-docker.sh
+- name: Install docker
+  shell: sh /tmp/get-docker.sh
+  args:
+    creates: /usr/bin/docker
+- name: Adding '{{ media_user_name }}' to the docker group
+  user:
+     name: '{{ media_user_name }}'
+     groups: docker
+     append: yes
+- name: Install docker-compose
+  shell: pip3 -v install docker-compose
+  args:
+    creates: /usr/local/bin/docker-compose

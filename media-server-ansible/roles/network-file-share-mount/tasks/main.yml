@@ -1,6 +1,6 @@
 ---
 - name: Create the mount directory
-  ansible.builtin.file:
+  file:
     path: "{{ local_mount_path }}"
     state: directory
     recurse: yes
