@@ -15,7 +15,6 @@
     var: escaped_mount_path
 
 - name: Install NFS mount systemd unit file
-  #noinspection UndefinedVariable
   template:
     src: network_mount_systemd_unit_template.j2
     #noinspection UndefinedVariable
