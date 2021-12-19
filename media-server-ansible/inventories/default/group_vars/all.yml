@@ -7,9 +7,9 @@ local_media_group: media-group
 local_media_gid: 1002
 
 # NFS
-nfs_server_address: freenas.local
+gv_nfs_server_address: freenas.local
 media_data_root_mount_path: /mnt/media_share
-server_data_root_mount_path: /mnt/server-data
+server_data_root_mount_path: /mnt/server_data
 container_data_dir_name: container_data
 
 # COMMON

@@ -3,18 +3,18 @@
   import_role:
     name: network-file-share-mount
   vars:
-    nfs_server_address: "{{ nfs_server_address }}"
-    remote_dir_path: "{{ remote_dir_path }}"
-    local_mount_path: "{{ local_mount_path }}"
-    mount_dir_user: "{{ mount_dir_user }}"
-    mount_dir_group: "{{ mount_dir_group }}"
+    nfs_server_address: "{{ server_data_nfs_server_address }}"
+    remote_dir_path: "{{ remote_server_data_path }}"
+    local_mount_path: "{{ local_server_data_path }}"
+    mount_dir_user: "{{ server_data_dir_user }}"
+    mount_dir_group: "{{ server_data_dir_group }}"
 
 - name: Create Transmission data dir
   file:
     path: "{{ item }}"
     state: directory
-    owner: "{{ mount_dir_user }}"
-    group: "{{ mount_dir_group }}"
+    owner: "{{ server_data_dir_user }}"
+    group: "{{ server_data_dir_group }}"
   loop:
     - "{{ media_server_container_stack_location }}"
     - "{{ transmission_download_path }}"
@@ -36,16 +36,16 @@
   copy:
     src: settings.json
     dest: "{{ transmission_config_path }}/settings.json"
-    owner: "{{ mount_dir_user }}"
-    group: "{{ mount_dir_group }}"
+    owner: "{{ server_data_dir_user }}"
+    group: "{{ server_data_dir_group }}"
     mode: '0600'
 
 - name: Copy transmission post dowbload script file
   copy:
     src: post-torrent-download.sh
     dest: "{{ transmission_config_path }}/scripts/post-torrent-download.sh"
-    owner: "{{ mount_dir_user }}"
-    group: "{{ mount_dir_group }}"
+    owner: "{{ server_data_dir_user }}"
+    group: "{{ server_data_dir_group }}"
     mode: '0755'
 
 - name: Start Docker containers using docker-compose
@@ -54,6 +54,6 @@
   register: output
 
 - name: Print output of docker compose action
-  ansible.builtin.debug:
+  debug:
     var: output
 

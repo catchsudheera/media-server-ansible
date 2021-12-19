@@ -2,7 +2,7 @@ version: "3"
 services:
   vpn:
     image: ghcr.io/bubuntux/nordvpn
-    container_name: {{ vpn_container_name }}
+    container_name: "{{ vpn_container_name }}"
     network_mode: bridge
     cap_add:
       - NET_ADMIN
@@ -29,17 +29,17 @@ services:
     restart: unless-stopped
   transmission:
     image: ghcr.io/linuxserver/transmission
-    container_name: {{ transmission_container_name }}
+    container_name: "{{ transmission_container_name }}"
     environment:
-      - PUID={{media_user_uid}}
-      - PGID={{media_group_gid}}
+      - PUID="{{ server_data_user_uid }}"
+      - PGID="{{ server_data_user_gid }}"
       - TZ=Europe/Amsterdam
       - USER=${TRANSMISSION_USERNAME}
       - PASS=${TRANSMISSION_PASSWORD}
       - WHITELIST=${WHITELIST}
     volumes:
-      - {{ transmission_config_path }}:/config
-      - {{ transmission_download_path }}:/downloads
+      - "{{ transmission_config_path }}":/config
+      - "{{ transmission_download_path }}":/downloads
     healthcheck:
       test: ["CMD-SHELL", "( curl -s https://api.nordvpn.com/vpn/check/full | grep 'Protected' && curl -s -X GET -I -u ${TRANSMISSION_USERNAME}:${TRANSMISSION_PASSWORD} http://localhost:9091/transmission/web/ | grep '200 OK' ) || exit 1"]
       interval: 30s
