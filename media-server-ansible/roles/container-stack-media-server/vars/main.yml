@@ -1,7 +1,7 @@
 ---
 # NFS
 server_data_nfs_server_address: "{{ gv_nfs_server_address }}"
-remote_server_data_path: /mnt/media-pool/media-server-config-test
+remote_server_data_path: "{{ server_data_remote_path }}"
 local_server_data_path: "{{ server_data_root_mount_path }}"
 
 # User
@@ -12,11 +12,11 @@ server_data_group_gid: "{{ local_media_gid }}"
 
 # Container stack
 container_data_root: "{{ server_data_root_mount_path }}/{{ container_data_dir_name | default('container_data') }}"
-media_server_container_stack_location: ~/.container-stack-media-server
+media_server_container_stack_location: "{{ local_media_user_home }}/.container-stack-media-server"
 
 ## transmission
-TRANSMISSION_USERNAME: "{{ local_media_user}}"
-TRANSMISSION_PASSWORD: edfaed
+#TRANSMISSION_USERNAME: "{{ TRANSMISSION_USERNAME}}"
+#TRANSMISSION_PASSWORD: "{{ TRANSMISSION_PASSWORD }}"
 #TRANSMISSION_RPC_WHITELIST: "{{ TRANSMISSION_RPC_WHITELIST }}"
 transmission_container_name: transmission
 transmission_config_path: "{{ container_data_root }}/{{ transmission_container_name }}/config"

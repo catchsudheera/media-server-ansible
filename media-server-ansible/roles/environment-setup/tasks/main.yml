@@ -10,7 +10,7 @@
     comment: Media user created for the media server
     uid: "{{ media_user_uid | int }}"
     group: "{{ media_group_name }}"
-    home: "/home/{{ media_user_name }}"
+    home: "{{ media_user_home }}"
     state: present
 - name: Install a list of packages
   apt:

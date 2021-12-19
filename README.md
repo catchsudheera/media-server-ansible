@@ -36,8 +36,9 @@ ansible-galaxy collection install community.docker
 ### Network share mount
 If using a NFS share mount role, make sure on the NAS server side,
 1. Create dedicated user and a group on the NAS server and note down `uid` and `gid`
-2. Use user/group mapping when creating the share. (e.g : `Mapall User` and `Mapall Group` in TrueNAS)
-3. Update `local_media_uid` and `local_media_gid` in `inventories/default/group_vars/all.yml` accordingly.
+2. Use user/group mapping when creating the data set in your storage pools
+3. Use user/group mapping when creating the share. (e.g : `Mapall User` and `Mapall Group` in TrueNAS). 
+4. Update `local_media_uid` and `local_media_gid` in `inventories/default/group_vars/all.yml` accordingly.
 
 ## Run Ansible Playbook
 ```shell script

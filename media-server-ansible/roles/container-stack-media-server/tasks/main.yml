@@ -18,7 +18,6 @@
   loop:
     - "{{ media_server_container_stack_location }}"
     - "{{ transmission_download_path }}"
-    - "{{ transmission_config_path }}"
     - "{{ transmission_config_path }}/scripts"
 
 - name: Install 7z to unpack rar files

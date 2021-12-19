@@ -5,15 +5,20 @@ local_media_user: media-user
 local_media_uid: 1003
 local_media_group: media-group
 local_media_gid: 1002
+local_media_user_home: "/home/{{ local_media_user }}"
 
 # NFS
 gv_nfs_server_address: freenas.local
+
 media_data_root_mount_path: /mnt/media_share
+media_data_remote_path: /mnt/media-pool/media-test
+
 server_data_root_mount_path: /mnt/server_data
-container_data_dir_name: container_data
+server_data_remote_path: /mnt/media-pool/media-server-data-test
 
 # COMMON
 media_download_path: "{{ media_data_root_mount_path}}/downloads"
+container_data_dir_name: container_data
 
 # VPN
 VPN_USERNAME: your-email-address

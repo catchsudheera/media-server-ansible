@@ -3,7 +3,6 @@
   file:
     path: "{{ local_mount_path }}"
     state: directory
-    recurse: yes
     owner: "{{ mount_dir_user }}"
     group: "{{ mount_dir_group }}"
 
