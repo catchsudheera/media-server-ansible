@@ -1,0 +1,53 @@
+version: "3"
+services:
+  vpn:
+    image: ghcr.io/bubuntux/nordvpn
+    container_name: {{ vpn_container_name }}
+    network_mode: bridge
+    cap_add:
+      - NET_ADMIN
+    sysctls:
+      - net.ipv4.conf.all.rp_filter=2
+    devices:
+      - /dev/net/tun
+    environment:                # Review https://github.com/bubuntux/nordvpn#environment-variables
+      - USER=${VPN_USERNAME}
+      - "PASS=${VPN_PASSWORD}"
+      - CONNECT=Netherlands
+      - TECHNOLOGY=OpenVPN
+      - PROTOCOL=TCP
+      - OBFUSCATE=Enable
+      - NETWORK=${NETWORK}
+    ports:
+      - 9091:9091
+    healthcheck:
+      test: ["CMD-SHELL", "curl -s https://api.nordvpn.com/vpn/check/full | grep 'Protected' || exit 1"]
+      interval: 1m30s
+      timeout: 30s
+      retries: 5
+      start_period: 40s
+    restart: unless-stopped
+  transmission:
+    image: ghcr.io/linuxserver/transmission
+    container_name: {{ transmission_container_name }}
+    environment:
+      - PUID={{media_user_uid}}
+      - PGID={{media_group_gid}}
+      - TZ=Europe/Amsterdam
+      - USER=${TRANSMISSION_USERNAME}
+      - PASS=${TRANSMISSION_PASSWORD}
+      - WHITELIST=${WHITELIST}
+    volumes:
+      - {{ transmission_config_path }}:/config
+      - {{ transmission_download_path }}:/downloads
+    healthcheck:
+      test: ["CMD-SHELL", "( curl -s https://api.nordvpn.com/vpn/check/full | grep 'Protected' && curl -s -X GET -I -u ${TRANSMISSION_USERNAME}:${TRANSMISSION_PASSWORD} http://localhost:9091/transmission/web/ | grep '200 OK' ) || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 2m
+    restart: unless-stopped
+    network_mode: service:vpn
+    depends_on:
+      vpn:
+        condition: service_healthy

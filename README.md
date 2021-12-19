@@ -25,6 +25,12 @@ ssh username@media-server-ip-or-hostname
 
 ## Install Ansible in your host machine
 
+## Install Ansible community plugins in your host machine
+
+```shell script
+ansible-galaxy collection install community.docker
+``` 
+
 ## Configure ansible playbook
 
 ### Network share mount

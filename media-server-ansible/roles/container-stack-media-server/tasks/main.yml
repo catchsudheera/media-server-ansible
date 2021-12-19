@@ -1,0 +1,59 @@
+---
+- name: Mount media server config NFS
+  import_role:
+    name: network-file-share-mount
+  vars:
+    nfs_server_address: "{{ nfs_server_address }}"
+    remote_dir_path: "{{ remote_dir_path }}"
+    local_mount_path: "{{ local_mount_path }}"
+    mount_dir_user: "{{ mount_dir_user }}"
+    mount_dir_group: "{{ mount_dir_group }}"
+
+- name: Create Transmission data dir
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ mount_dir_user }}"
+    group: "{{ mount_dir_group }}"
+  loop:
+    - "{{ media_server_container_stack_location }}"
+    - "{{ transmission_download_path }}"
+    - "{{ transmission_config_path }}"
+    - "{{ transmission_config_path }}/scripts"
+
+- name: Install 7z to unpack rar files
+  apt:
+    name: [p7zip-full, p7zip]
+    update_cache: yes
+
+- name: Copy Docker compose file
+  template: src=docker-compose.yml.j2 dest="{{ media_server_container_stack_location }}/docker-compose.yml"
+
+- name: Copy environment variable file
+  template: src=.env.j2 dest="{{ media_server_container_stack_location }}/.env"
+
+- name: Copy transmission settings file
+  copy:
+    src: settings.json
+    dest: "{{ transmission_config_path }}/settings.json"
+    owner: "{{ mount_dir_user }}"
+    group: "{{ mount_dir_group }}"
+    mode: '0600'
+
+- name: Copy transmission post dowbload script file
+  copy:
+    src: post-torrent-download.sh
+    dest: "{{ transmission_config_path }}/scripts/post-torrent-download.sh"
+    owner: "{{ mount_dir_user }}"
+    group: "{{ mount_dir_group }}"
+    mode: '0755'
+
+- name: Start Docker containers using docker-compose
+  community.docker.docker_compose:
+    project_src: "{{ media_server_container_stack_location }}"
+  register: output
+
+- name: Print output of docker compose action
+  ansible.builtin.debug:
+    var: output
+

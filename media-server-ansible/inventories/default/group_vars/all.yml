@@ -1,6 +1,29 @@
 ---
+# USER
 ansible_user: pi
 local_media_user: media-user
 local_media_uid: 1003
 local_media_group: media-group
 local_media_gid: 1002
+
+# NFS
+nfs_server_address: freenas.local
+media_data_root_mount_path: /mnt/media_share
+server_data_root_mount_path: /mnt/server-data
+container_data_dir_name: container_data
+
+# COMMON
+media_download_path: "{{ media_data_root_mount_path}}/downloads"
+
+# VPN
+VPN_USERNAME: your-email-address
+VPN_PASSWORD: your-vpn-password
+VPN_NETWORK_ALLOW_CIDR: 192.168.178.0/24
+
+# TRANSMISSION
+TRANSMISSION_USERNAME: "{{ local_media_user }}"
+TRANSMISSION_PASSWORD: your-transmission-password
+TRANSMISSION_RPC_WHITELIST: 127.0.0.1,192.168.*.*
+
+
+
