@@ -16,7 +16,10 @@
 
 - name: Install NFS mount systemd unit file
   #noinspection UndefinedVariable
-  template: src=network_mount_systemd_unit_template.j2 dest=/etc/systemd/system/{{ escaped_mount_path.stdout }}.mount
+  template:
+    src: network_mount_systemd_unit_template.j2
+    #noinspection UndefinedVariable
+    dest: /etc/systemd/system/{{ escaped_mount_path.stdout }}.mount
 
 - name: Mount systemd enable and start
   systemd:
