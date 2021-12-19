@@ -9,7 +9,7 @@
     mount_dir_user: "{{ server_data_dir_user }}"
     mount_dir_group: "{{ server_data_dir_group }}"
 
-- name: Create Transmission data dir
+- name: Create directories
   file:
     path: "{{ item }}"
     state: directory

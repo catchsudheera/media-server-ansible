@@ -32,7 +32,7 @@ services:
     container_name: "{{ transmission_container_name }}"
     environment:
       - PUID="{{ server_data_user_uid }}"
-      - PGID="{{ server_data_user_gid }}"
+      - PGID="{{ server_data_group_gid }}"
       - TZ=Europe/Amsterdam
       - USER=${TRANSMISSION_USERNAME}
       - PASS=${TRANSMISSION_PASSWORD}

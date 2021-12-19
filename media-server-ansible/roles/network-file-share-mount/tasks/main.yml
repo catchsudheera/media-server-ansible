@@ -26,4 +26,8 @@
     state: restarted
     daemon_reload: yes
 
+- name: Sleep for 30 seconds to allow mount to complete
+  wait_for:
+    timeout: 30
+
 
