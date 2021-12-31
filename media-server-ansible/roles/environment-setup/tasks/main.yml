@@ -4,6 +4,7 @@
     name: "{{ media_group_name }}"
     gid: "{{ media_group_gid | int }}"
     state: present
+
 - name: Create media user
   user:
     name: "{{ media_user_name }}"
@@ -12,27 +13,33 @@
     group: "{{ media_group_name }}"
     home: "{{ media_user_home }}"
     state: present
+
 - name: Install a list of packages
   apt:
     name: "{{ pkgstoinstall }}"
     update_cache: yes
+
 - name: Remove python-configparser package
   apt:
     name: python-configparser
     state: absent
+
 - name: Get docker install script
   get_url:
     url: https://get.docker.com
     dest: /tmp/get-docker.sh
+
 - name: Install docker
   shell: sh /tmp/get-docker.sh
   args:
     creates: /usr/bin/docker
+
 - name: Adding '{{ media_user_name }}' to the docker group
   user:
      name: '{{ media_user_name }}'
      groups: docker
      append: yes
+
 - name: Install docker-compose
   shell: pip3 -v install docker-compose
   args:

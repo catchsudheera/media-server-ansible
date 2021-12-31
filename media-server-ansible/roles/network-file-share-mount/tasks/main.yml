@@ -16,20 +16,55 @@
 
 - name: Install NFS mount systemd unit file
   template:
-    src: network_mount_systemd_unit_template.j2
+    src: mount_unit.mount.j2
     #noinspection UndefinedVariable
     dest: /etc/systemd/system/{{ escaped_mount_path.stdout }}.mount
 
-- name: Mount systemd enable and start
+- name: Install NFS automount systemd unit file
+  template:
+    src: automount_unit.automount.j2
+    #noinspection UndefinedVariable
+    dest: /etc/systemd/system/{{ escaped_mount_path.stdout }}.automount
+
+- name: Mount unit disable and stop
   systemd:
     #noinspection UndefinedVariable
     name: '{{ escaped_mount_path.stdout }}.mount'
+    enabled: no
+    state: stopped
+
+- name: Automount unit enable and start
+  systemd:
+    #noinspection UndefinedVariable
+    name: '{{ escaped_mount_path.stdout }}.automount'
     enabled: yes
     state: restarted
     daemon_reload: yes
 
+- name: Check whether docker unit file exist
+  stat:
+    path: "/lib/systemd/system/docker.service"
+  register: docker_service_file
+
+- name: Check whether automount condition already defined
+  lineinfile:
+    state: absent
+    path: "/lib/systemd/system/docker.service"
+    #noinspection UndefinedVariable
+    regexp: "^After=.*{{ escaped_mount_path.stdout }}.automount.*$"
+  check_mode: true
+  changed_when: false
+  register: automount_condition_defined
+
+- name: Adding docker service to start after automount
+  lineinfile:
+    path: "/lib/systemd/system/docker.service"
+    backrefs: yes
+    regexp: "^(After=.*)$"
+    #noinspection UndefinedVariable
+    line: '\1 {{ escaped_mount_path.stdout }}.automount'
+  when: docker_service_file.stat.exists and automount_condition_defined.found == 0
+
 - name: Sleep for 30 seconds to allow mount to complete
   wait_for:
     timeout: 30
-
-
