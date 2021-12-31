@@ -19,6 +19,8 @@
     - "{{ media_server_container_stack_location }}"
     - "{{ transmission_download_path }}"
     - "{{ transmission_config_path }}/scripts"
+    - "{{ qbittorrent_download_path }}"
+    - "{{ qbittorrent_config_path }}"
 
 - name: Install 7z to unpack rar files
   apt:
@@ -40,12 +42,11 @@
     group: "{{ server_data_dir_group }}"
 
 - name: Copy transmission settings file
-  copy:
+  template:
     src: settings.json
-    dest: "{{ transmission_config_path }}/settings.json"
+    dest: "{{ transmission_config_path }}/settings.json.j2"
     owner: "{{ server_data_dir_user }}"
     group: "{{ server_data_dir_group }}"
-    mode: '0600'
 
 - name: Copy transmission post dowbload script file
   copy:
@@ -59,8 +60,4 @@
   community.docker.docker_compose:
     project_src: "{{ media_server_container_stack_location }}"
   register: output
-
-- name: Print output of docker compose action
-  debug:
-    var: output
 

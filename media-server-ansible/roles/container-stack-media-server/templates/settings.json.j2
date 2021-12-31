@@ -47,7 +47,10 @@
   "rpc-host-whitelist-enabled": false,
   "rpc-port": 9091,
   "rpc-url": "/transmission/",
+  "rpc-username": "{{ TRANSMISSION_USERNAME }}",
+  "rpc-password": "{{ TRANSMISSION_PASSWORD }}",
   "rpc-whitelist-enabled": true,
+  "rpc-whitelist": "{{ TRANSMISSION_RPC_WHITELIST }}",
   "scrape-paused-torrents-enabled": true,
   "script-torrent-done-enabled": true,
   "script-torrent-done-filename": "/config/scripts/post-torrent-download.sh",
@@ -59,7 +62,6 @@
   "speed-limit-up-enabled": false,
   "start-added-torrents": true,
   "trash-original-torrent-files": false,
-  "umask": 2,
   "upload-slots-per-torrent": 14,
   "utp-enabled": false,
   "watch-dir-enabled": false

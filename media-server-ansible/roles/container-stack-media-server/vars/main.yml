@@ -22,6 +22,11 @@ transmission_container_name: transmission
 transmission_config_path: "{{ container_data_root }}/{{ transmission_container_name }}/config"
 transmission_download_path: "{{ media_download_path }}"
 
+## qbittorrent
+qbittorrent_container_name: qbittorrent
+qbittorrent_config_path: "{{ container_data_root }}/{{ qbittorrent_container_name }}/config"
+qbittorrent_download_path: "{{ media_download_path }}"
+
 ## nordvpn
 #VPN_USERNAME: "{{ VPN_USERNAME }}"
 #VPN_PASSWORD: "{{ VPN_PASSWORD }}"

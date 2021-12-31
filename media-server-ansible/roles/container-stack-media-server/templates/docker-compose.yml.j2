@@ -20,6 +20,9 @@ services:
       - NETWORK=${NETWORK}
     ports:
       - 9091:9091
+      - 6881:6881
+      - 6881:6881/udp
+      - 8080:8080
     healthcheck:
       test: ["CMD-SHELL", "curl -s https://api.nordvpn.com/vpn/check/full | grep 'Protected' || exit 1"]
       interval: 1m30s
@@ -51,3 +54,25 @@ services:
     depends_on:
       vpn:
         condition: service_healthy
+  qbittorrent:
+     image: lscr.io/linuxserver/qbittorrent
+     container_name: {{ qbittorrent_container_name }}
+     environment:
+       - PUID={{ server_data_user_uid }}
+       - PGID={{ server_data_group_gid }}
+       - TZ=Europe/Amsterdam
+       - WEBUI_PORT=8080
+     volumes:
+       - {{ qbittorrent_config_path }}:/config
+       - {{ qbittorrent_download_path }}:/downloads
+     healthcheck:
+       test: ["CMD-SHELL", "( curl -s https://api.nordvpn.com/vpn/check/full | grep 'Protected' && curl -s -X GET -I  http://localhost:8080 | grep '200 OK' ) || exit 1"]
+       interval: 30s
+       timeout: 10s
+       retries: 3
+       start_period: 2m
+     restart: unless-stopped
+     network_mode: service:vpn
+     depends_on:
+       vpn:
+         condition: service_healthy

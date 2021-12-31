@@ -44,3 +44,9 @@ If using a NFS share mount role, make sure on the NAS server side,
 ```shell script
 ansible-playbook site.yml -i inventories/default/hosts.ini
 ```
+
+## App specific configuration
+
+### qbittorrent
+
+1. Default username is `admin`, password is `adminadmin`, change it via the webui (`<your-ip>:8080`)
