@@ -6,6 +6,13 @@
     owner: "{{ server_data_dir_user }}"
     group: "{{ server_data_dir_group }}"
 
+- name: Create portainer directories
+  file:
+    path: "{{ portainer_config_path }}"
+    state: directory
+    owner: "{{ server_data_dir_user }}"
+    group: "{{ server_data_dir_group }}"
+
 - name: Copy Docker compose template
   template:
     src: docker-compose.yml.j2
