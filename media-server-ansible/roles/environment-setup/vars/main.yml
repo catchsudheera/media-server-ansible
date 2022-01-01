@@ -1,7 +1,7 @@
 ---
-media_user_name: "{{ local_media_user }}"
-media_user_uid: "{{ local_media_uid }}"
-media_group_name: "{{ local_media_group }}"
-media_group_gid: "{{ local_media_gid }}"
-media_user_home: "{{ local_media_user_home }}"
+media_user_name: "{{ gv_local_media_user }}"
+media_user_uid: "{{ gv_local_media_uid }}"
+media_group_name: "{{ gv_local_media_group }}"
+media_group_gid: "{{ gv_local_media_gid }}"
+media_user_home: "{{ gv_local_media_user_home }}"
 pkgstoinstall: [ libffi-dev, libssl-dev, python3, python3-pip ]
