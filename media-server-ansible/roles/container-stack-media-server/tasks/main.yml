@@ -1,22 +1,10 @@
 ---
-- name: Mount media server config NFS
-  import_role:
-    name: network-file-share-mount
-  vars:
-    nfs_server_address: "{{ server_data_nfs_server_address }}"
-    remote_dir_path: "{{ remote_server_data_path }}"
-    local_mount_path: "{{ local_server_data_path }}"
-    mount_dir_user: "{{ server_data_dir_user }}"
-    mount_dir_group: "{{ server_data_dir_group }}"
-
-- name: Create common directories
+- name: Create stack root directory
   file:
-    path: "{{ item }}"
+    path: "{{ media_server_container_stack_location }}"
     state: directory
     owner: "{{ server_data_dir_user }}"
     group: "{{ server_data_dir_group }}"
-  loop:
-    - "{{ media_server_container_stack_location }}"
 
 - name: Create qbittorrent directories
   file:
@@ -48,7 +36,7 @@
     owner: "{{ server_data_dir_user }}"
     group: "{{ server_data_dir_group }}"
 
-- name: Install Transmission config
+- name: Install Transmission
   block:
     - name: Create transmission directories
       file:

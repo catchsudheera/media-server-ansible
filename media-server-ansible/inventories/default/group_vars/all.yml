@@ -10,14 +10,14 @@ gv_local_media_user_home: "/home/{{ gv_local_media_user }}"
 # NFS
 gv_nfs_server_address: freenas.local
 
-gv_media_data_root_mount_path: /mnt/media_share
+gv_media_data_root_local_mount_path: /mnt/media_share
 gv_media_data_remote_path: /mnt/media-pool/media-test
 
-gv_server_data_root_mount_path: /mnt/server_data
+gv_server_data_root_local_mount_path: /mnt/server_data
 gv_server_data_remote_path: /mnt/media-pool/media-server-data-test
 
 # COMMON
-gv_media_download_path: "{{ gv_media_data_root_mount_path}}/downloads"
+gv_media_download_path: "{{ gv_media_data_root_local_mount_path}}/downloads"
 gv_container_data_dir_name: container_data
 
 # VPN

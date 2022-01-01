@@ -1,46 +1,90 @@
 ---
-- name: Create media group
-  group:
-    name: "{{ media_group_name }}"
-    gid: "{{ media_group_gid | int }}"
-    state: present
+- name: Create User and Group
+  block:
+    - name: Create media group
+      group:
+        name: "{{ media_group_name }}"
+        gid: "{{ media_group_gid | int }}"
+        state: present
 
-- name: Create media user
-  user:
-    name: "{{ media_user_name }}"
-    comment: Media user created for the media server
-    uid: "{{ media_user_uid | int }}"
-    group: "{{ media_group_name }}"
-    home: "{{ media_user_home }}"
-    state: present
+    - name: Create media user
+      user:
+        name: "{{ media_user_name }}"
+        comment: Media user created for the media server
+        uid: "{{ media_user_uid | int }}"
+        group: "{{ media_group_name }}"
+        home: "{{ media_user_home }}"
+        state: present
 
-- name: Install a list of packages
-  apt:
-    name: "{{ pkgstoinstall }}"
-    update_cache: yes
+- name: Install Docker and Docker-compose
+  block:
+    - name: Installing dependecies for docker installation
+      apt:
+        name: [ libffi-dev, libssl-dev, python3, python3-pip ]
+        update_cache: yes
 
-- name: Remove python-configparser package
-  apt:
-    name: python-configparser
-    state: absent
+    - name: Remove python-configparser package
+      apt:
+        name: python-configparser
+        state: absent
 
-- name: Get docker install script
-  get_url:
-    url: https://get.docker.com
-    dest: /tmp/get-docker.sh
+    - name: Get docker install script
+      get_url:
+        url: https://get.docker.com
+        dest: /tmp/get-docker.sh
 
-- name: Install docker
-  shell: sh /tmp/get-docker.sh
-  args:
-    creates: /usr/bin/docker
+    - name: Install docker
+      shell: sh /tmp/get-docker.sh
+      args:
+        creates: /usr/bin/docker
 
-- name: Adding '{{ media_user_name }}' to the docker group
-  user:
-     name: '{{ media_user_name }}'
-     groups: docker
-     append: yes
+    - name: Adding '{{ media_user_name }}' to the docker group
+      user:
+         name: '{{ media_user_name }}'
+         groups: docker
+         append: yes
 
-- name: Install docker-compose
-  shell: pip3 -v install docker-compose
-  args:
-    creates: /usr/local/bin/docker-compose
+    - name: Install docker-compose
+      shell: pip3 -v install docker-compose
+      args:
+        creates: /usr/local/bin/docker-compose
+
+- name: Create media and server data directories
+  block:
+    - name: Mount server data NFS and add docker systemd dependency
+      import_role:
+        name: network-file-share-mount
+      vars:
+        nfs_server_address: "{{ server_data_nfs_server_address }}"
+        remote_dir_path: "{{ server_data_remote_dir_path }}"
+        local_mount_path: "{{ server_data_local_mount_path }}"
+        mount_dir_user: "{{ media_user_name }}"
+        mount_dir_group: "{{ media_group_name }}"
+      when: server_data_location_type == 'nfs'
+
+    - name: Create server data LOCAL
+      file:
+        path: "{{ server_data_local_path }}"
+        state: directory
+        owner: "{{ media_user_name }}"
+        group: "{{ media_group_name }}"
+      when: server_data_location_type == 'local'
+
+    - name: Mount media data NFS and add docker systemd dependency
+      import_role:
+        name: network-file-share-mount
+      vars:
+        nfs_server_address: "{{ media_data_nfs_server_address }}"
+        remote_dir_path: "{{ media_data_remote_dir_path }}"
+        local_mount_path: "{{ media_data_local_mount_path }}"
+        mount_dir_user: "{{ media_user_name }}"
+        mount_dir_group: "{{ media_group_name }}"
+      when: media_data_location_type == 'nfs'
+
+    - name: Create media data LOCAL
+      file:
+        path: "{{ media_data_local_path }}"
+        state: directory
+        owner: "{{ media_user_name }}"
+        group: "{{ media_group_name }}"
+      when: media_data_location_type == 'local'

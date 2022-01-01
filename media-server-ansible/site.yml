@@ -4,5 +4,4 @@
   become: yes
   roles:
     - role: environment-setup
-    - role: network-file-share-mount
-    - role: container-stack-media-server
+#    - role: container-stack-media-server

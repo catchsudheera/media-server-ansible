@@ -1,6 +1,0 @@
----
-nfs_server_address: "{{ gv_nfs_server_address }}"
-remote_dir_path: "{{ gv_media_data_remote_path }}"
-local_mount_path: "{{ gv_media_data_root_mount_path }}"
-mount_dir_user: "{{ gv_local_media_user}}"
-mount_dir_group: "{{ gv_local_media_group }}"

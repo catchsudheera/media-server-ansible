@@ -1,7 +1,34 @@
 ---
+# User setup
 media_user_name: "{{ gv_local_media_user }}"
 media_user_uid: "{{ gv_local_media_uid }}"
 media_group_name: "{{ gv_local_media_group }}"
 media_group_gid: "{{ gv_local_media_gid }}"
 media_user_home: "{{ gv_local_media_user_home }}"
-pkgstoinstall: [ libffi-dev, libssl-dev, python3, python3-pip ]
+
+# Directory setup
+
+## Media data location type. Options : [local, nfs]
+
+### local : Directory created in the same server file system
+#media_data_location_type: local
+#media_data_local_path: /path/to/mediadata/dir
+
+### nfs : An a directory located in auto mounted NFS file system
+media_data_location_type: nfs
+media_data_nfs_server_address: "{{ gv_nfs_server_address }}"
+media_data_remote_dir_path: "{{ gv_media_data_remote_path }}"
+media_data_local_mount_path: "{{ gv_media_data_root_local_mount_path }}"
+
+
+## Server data location type. Options : [local, nfs]
+
+### local : Directory created in the same server file system
+#server_data_location_type: local
+#server_data_local_path: /path/to/serverdata/dir
+
+### nfs : An a directory located in auto mounted NFS file system
+server_data_location_type: nfs
+server_data_nfs_server_address: "{{ gv_nfs_server_address }}"
+server_data_remote_dir_path: "{{ gv_server_data_remote_path }}"
+server_data_local_mount_path: "{{ gv_server_data_root_local_mount_path }}"
