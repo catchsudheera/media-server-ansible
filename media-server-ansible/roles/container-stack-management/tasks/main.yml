@@ -23,3 +23,10 @@
 - name: Start Docker containers using docker-compose
   community.docker.docker_compose:
     project_src: "{{ management_container_stack_location }}"
+  tags: start-stacks
+
+- name: Stop Docker containers using docker-compose
+  community.docker.docker_compose:
+    project_src: "{{ management_container_stack_location }}"
+    state: absent
+  tags: [ 'never', 'stop-stacks' ]

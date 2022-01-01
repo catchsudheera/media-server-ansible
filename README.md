@@ -56,3 +56,16 @@ ansible-playbook site.yml -i inventories/default/hosts.ini
 
 - Enable/Disable using `qbittorrent_enable` variable in the role. Disabled by default
 - Default username is `admin`, password is `adminadmin`, change it via the webui (`<your-ip>:8080`)
+
+## Container Stack operations
+
+### Start all container stacks
+```shell script
+ansible-playbook site.yml -i inventories/default/hosts.ini --tags start-stacks
+```
+### Stop all container stacks 
+```shell script
+ansible-playbook site.yml -i inventories/default/hosts.ini --tags stop-stacks
+```
+
+
