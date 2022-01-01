@@ -1,0 +1,35 @@
+version: "3"
+services:
+  autoheal:
+    image: willfarrell/autoheal
+    container_name: autoheal
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
+    environment:
+      - AUTOHEAL_INTERVAL=30
+      - CURL_TIMEOUT=30
+      - AUTOHEAL_CONTAINER_LABEL=all
+  watchtower:
+    container_name: watchtower
+    image: containrrr/watchtower
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+     - WATCHTOWER_INCLUDE_RESTARTING=true
+     - WATCHTOWER_SCHEDULE=00 58 9 * * *
+     - WATCHTOWER_CLEANUP=true
+  portainer:
+    container_name: portainer
+    image: portainer/portainer-ce
+    command: -H unix:///var/run/docker.sock
+    restart: unless-stopped
+    ports:
+      - 8005:8000
+      - 9005:9000
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - {{ portainer_data_dir }}:/data
+

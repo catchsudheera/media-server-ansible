@@ -19,10 +19,14 @@ services:
       - OBFUSCATE=Enable
       - NETWORK=${NETWORK}
     ports:
+{% if transmission_enable == true %}
       - 9091:9091
+{% endif %}
+{% if qbittorrent_enable == true %}
       - 6881:6881
       - 6881:6881/udp
       - 8080:8080
+{% endif %}
     healthcheck:
       test: ["CMD-SHELL", "curl -s https://api.nordvpn.com/vpn/check/full | grep 'Protected' || exit 1"]
       interval: 1m30s

@@ -10,10 +10,6 @@
   command: 'systemd-escape --path "{{ local_mount_path }}"'
   register: escaped_mount_path
 
-- name: Print the escaped name
-  debug:
-    var: escaped_mount_path
-
 - name: Install NFS mount systemd unit file
   template:
     src: mount_unit.mount.j2
