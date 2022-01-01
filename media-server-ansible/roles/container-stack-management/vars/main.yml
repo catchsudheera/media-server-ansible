@@ -1,2 +1,11 @@
 ---
+# User
+server_data_dir_user: "{{ gv_local_media_user }}"
+server_data_dir_group: "{{ gv_local_media_group }}"
 
+# Container stack
+container_data_root: "{{ gv_container_data_root }}"
+management_container_stack_location: "{{ gv_local_media_user_home }}/.container-stack-management"
+
+# Portainer
+portainer_config_path: "{{ container_data_root }}/portainer/config"

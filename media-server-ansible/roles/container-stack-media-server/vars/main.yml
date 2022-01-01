@@ -6,7 +6,7 @@ server_data_user_uid: "{{ gv_local_media_uid }}"
 server_data_group_gid: "{{ gv_local_media_gid }}"
 
 # Container stack
-container_data_root: "{{ gv_server_data_root_local_mount_path }}/{{ container_data_dir_name | default('container_data') }}"
+container_data_root: "{{ gv_container_data_root }}"
 media_server_container_stack_location: "{{ gv_local_media_user_home }}/.container-stack-media-server"
 
 ## transmission
