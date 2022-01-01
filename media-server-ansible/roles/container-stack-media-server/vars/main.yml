@@ -15,6 +15,7 @@ container_data_root: "{{ gv_server_data_root_mount_path }}/{{ container_data_dir
 media_server_container_stack_location: "{{ gv_local_media_user_home }}/.container-stack-media-server"
 
 ## transmission
+transmission_enable: true
 TRANSMISSION_USERNAME: "{{ GV_TRANSMISSION_USERNAME}}"
 TRANSMISSION_PASSWORD: "{{ GV_TRANSMISSION_PASSWORD }}"
 TRANSMISSION_RPC_WHITELIST: "{{ GV_TRANSMISSION_RPC_WHITELIST }}"

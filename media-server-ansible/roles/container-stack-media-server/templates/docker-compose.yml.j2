@@ -30,6 +30,7 @@ services:
       retries: 5
       start_period: 40s
     restart: unless-stopped
+{% if transmission_enable == true %}
   transmission:
     image: ghcr.io/linuxserver/transmission
     container_name: {{ transmission_container_name }}
@@ -54,6 +55,8 @@ services:
     depends_on:
       vpn:
         condition: service_healthy
+{% endif %}
+{% if qbittorrent_enable == true %}
   qbittorrent:
      image: lscr.io/linuxserver/qbittorrent
      container_name: {{ qbittorrent_container_name }}
@@ -76,3 +79,4 @@ services:
      depends_on:
        vpn:
          condition: service_healthy
+{% endif %}

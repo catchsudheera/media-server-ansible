@@ -47,6 +47,12 @@ ansible-playbook site.yml -i inventories/default/hosts.ini
 
 ## App specific configuration
 
+### transmission
+
+- Enable/Disable using `transmission_enable` variable in the role. Enabled by default
+
+
 ### qbittorrent
 
-1. Default username is `admin`, password is `adminadmin`, change it via the webui (`<your-ip>:8080`)
+- Enable/Disable using `qbittorrent_enable` variable in the role. Disabled by default
+- Default username is `admin`, password is `adminadmin`, change it via the webui (`<your-ip>:8080`)
