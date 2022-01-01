@@ -1,0 +1,13 @@
+---
+# User
+server_data_dir_user: "{{ gv_local_media_user }}"
+server_data_dir_uid: "{{ gv_local_media_uid }}"
+server_data_dir_group: "{{ gv_local_media_group }}"
+server_data_dir_gid: "{{ gv_local_media_gid }}"
+
+# Container stack
+container_data_root: "{{ gv_container_data_root }}"
+monitoring_container_stack_location: "{{ gv_local_media_user_home }}/.container-stack-monitoring"
+
+# Portainer
+uptime_kuma_config_path: "{{ container_data_root }}/uptime_kuma/config"

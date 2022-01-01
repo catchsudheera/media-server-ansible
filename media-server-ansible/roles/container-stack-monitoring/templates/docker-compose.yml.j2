@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+  app:
+    container_name: uptime_kuma
+    image: louislam/uptime-kuma
+    restart: unless-stopped
+    environment:
+          PUID: {{ server_data_dir_uid }}
+          PGID: {{ server_data_dir_gid }}
+    volumes:
+      - {{ uptime_kuma_config_path }}:/app/data
+    ports:
+      - 3001:3001

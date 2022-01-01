@@ -6,3 +6,4 @@
     - role: environment-setup
     - role: container-stack-media-server
     - role: container-stack-management
+    - role: container-stack-monitoring

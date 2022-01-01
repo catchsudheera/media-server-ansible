@@ -1,0 +1,32 @@
+---
+- name: Create stack root directory
+  file:
+    path: "{{ monitoring_container_stack_location }}"
+    state: directory
+    owner: "{{ server_data_dir_user }}"
+    group: "{{ server_data_dir_group }}"
+
+- name: Create uptime-kuma directories
+  file:
+    path: "{{ uptime_kuma_config_path }}"
+    state: directory
+    owner: "{{ server_data_dir_user }}"
+    group: "{{ server_data_dir_group }}"
+
+- name: Copy Docker compose template
+  template:
+    src: docker-compose.yml.j2
+    dest: "{{ monitoring_container_stack_location }}/docker-compose.yml"
+    owner: "{{ server_data_dir_user }}"
+    group: "{{ server_data_dir_group }}"
+
+- name: Start Docker containers using docker-compose
+  community.docker.docker_compose:
+    project_src: "{{ monitoring_container_stack_location }}"
+  tags: start-stacks
+
+- name: Stop Docker containers using docker-compose
+  community.docker.docker_compose:
+    project_src: "{{ monitoring_container_stack_location }}"
+    state: absent
+  tags: [ 'never', 'stop-stacks' ]
