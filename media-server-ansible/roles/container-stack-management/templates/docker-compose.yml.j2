@@ -1,8 +1,11 @@
-version: "3"
+version: "3.8"
+
 services:
   autoheal:
     image: willfarrell/autoheal
     container_name: autoheal
+    networks:
+      - media_server_network
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     restart: unless-stopped
@@ -11,8 +14,10 @@ services:
       - CURL_TIMEOUT=30
       - AUTOHEAL_CONTAINER_LABEL=all
   watchtower:
-    container_name: watchtower
     image: containrrr/watchtower
+    container_name: watchtower
+    networks:
+      - media_server_network
     restart: unless-stopped
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
@@ -22,8 +27,10 @@ services:
      - WATCHTOWER_SCHEDULE=00 58 9 * * *
      - WATCHTOWER_CLEANUP=true
   portainer:
-    container_name: portainer
     image: portainer/portainer-ce
+    container_name: portainer
+    networks:
+      - media_server_network
     command: -H unix:///var/run/docker.sock
     restart: unless-stopped
     ports:
@@ -33,3 +40,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - {{ portainer_config_path }}:/data
 
+networks:
+  media_server_network:
+    external:
+      name: {{ docker_bridge_network_name }}

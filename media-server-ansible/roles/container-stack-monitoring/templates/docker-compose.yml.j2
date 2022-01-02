@@ -1,10 +1,11 @@
-version: "3"
+version: "3.8"
 
 services:
   app:
-    container_name: uptime_kuma
     image: louislam/uptime-kuma
-    restart: unless-stopped
+    container_name: uptime_kuma
+    networks:
+      - media_server_network
     environment:
           PUID: {{ server_data_dir_uid }}
           PGID: {{ server_data_dir_gid }}
@@ -12,3 +13,9 @@ services:
       - {{ uptime_kuma_config_path }}:/app/data
     ports:
       - 3001:3001
+    restart: unless-stopped
+
+networks:
+  media_server_network:
+    external:
+      name: {{ docker_bridge_network_name }}

@@ -4,7 +4,7 @@
   become: yes
   roles:
     - role: environment-setup
+    - role: container-stack-reverse-proxy
     - role: container-stack-media-server
     - role: container-stack-management
     - role: container-stack-monitoring
-    - role: container-stack-reverse-proxy

@@ -1,4 +1,4 @@
-version: "3"
+version: "3.8"
 
 services:
   swag:
@@ -6,6 +6,8 @@ services:
     container_name: reverse_proxy
     cap_add:
       - NET_ADMIN
+    networks:
+      - media_server_network
     environment:
       - PUID={{ server_data_dir_uid }}
       - PGID={{ server_data_dir_gid }}
@@ -21,3 +23,8 @@ services:
       - 443:443
       - 80:80
     restart: unless-stopped
+
+networks:
+  media_server_network:
+    name: {{ docker_bridge_network_name }}
+    driver: bridge

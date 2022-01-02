@@ -1,9 +1,12 @@
-version: "3"
+version: "3.8"
+
 services:
   vpn:
     image: ghcr.io/bubuntux/nordvpn
     container_name: {{ vpn_container_name }}
-    network_mode: bridge
+    networks:
+      - media_server_network
+      - vpn_local
     cap_add:
       - NET_ADMIN
     sysctls:
@@ -87,6 +90,8 @@ services:
   sonarr:
       image: lscr.io/linuxserver/sonarr
       container_name: sonarr
+      networks:
+        - media_server_network
       environment:
         - PUID={{ server_data_user_uid }}
         - PGID={{ server_data_group_gid }}
@@ -107,6 +112,8 @@ services:
   radarr:
       image: lscr.io/linuxserver/radarr
       container_name: radarr
+      networks:
+        - media_server_network
       environment:
         - PUID={{ server_data_user_uid }}
         - PGID={{ server_data_group_gid }}
@@ -127,6 +134,8 @@ services:
   jackett:
       image: lscr.io/linuxserver/jackett
       container_name: jackett
+      networks:
+        - media_server_network
       environment:
         - PUID={{ server_data_user_uid }}
         - PGID={{ server_data_group_gid }}
@@ -144,3 +153,10 @@ services:
        retries: 3
        start_period: 2m
       restart: unless-stopped
+
+networks:
+  vpn_local:
+    driver: bridge
+  media_server_network:
+    external:
+      name: {{ docker_bridge_network_name }}

@@ -3,6 +3,9 @@
 server_data_dir_user: "{{ gv_local_media_user }}"
 server_data_dir_group: "{{ gv_local_media_group }}"
 
+# Docker network setup
+docker_bridge_network_name: "{{ gv_docker_bridge_network_name }}"
+
 # Container stack
 container_data_root: "{{ gv_container_data_root }}"
 management_container_stack_location: "{{ gv_local_media_user_home }}/.container-stack-management"
