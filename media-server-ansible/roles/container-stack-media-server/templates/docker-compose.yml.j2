@@ -103,7 +103,7 @@ services:
       ports:
         - 8989:8989
       healthcheck:
-       test: ["CMD-SHELL", "curl -s -X GET -I  http://localhost:8989 | grep '200 OK' || exit 1"]
+       test: ["CMD-SHELL", "curl -s -X GET -I  http://localhost:8989/sonarr | grep '200 OK' || exit 1"]
        interval: 30s
        timeout: 10s
        retries: 3
@@ -125,7 +125,7 @@ services:
       ports:
         - 7878:7878
       healthcheck:
-       test: ["CMD-SHELL", "curl -s -X GET -I  http://localhost:7878 | grep '200 OK' || exit 1"]
+       test: ["CMD-SHELL", "curl -s -X GET -I  http://localhost:7878/radarr | grep '200 OK' || exit 1"]
        interval: 30s
        timeout: 10s
        retries: 3
