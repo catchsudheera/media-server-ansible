@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  swag:
+    image: lscr.io/linuxserver/swag
+    container_name: reverse_proxy
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - PUID={{ server_data_dir_uid }}
+      - PGID={{ server_data_dir_gid }}
+      - TZ={{ server_timezone }}
+      - URL={{ server_domain_name }}
+      - VALIDATION=http
+      - EMAIL={{ notification_email }}
+    volumes:
+      - {{ reverse_proxy_config_path }}:/config
+      - {{ reverse_proxy_container_stack_location }}/additional-config/custom-services.d:/config/custom-services.d
+      - {{ reverse_proxy_container_stack_location }}/additional-config/custom-cont-init.d:/config/custom-cont-init.d
+    ports:
+      - 443:443
+      - 80:80
+    restart: unless-stopped

@@ -41,7 +41,7 @@ services:
     environment:
       - PUID={{ server_data_user_uid }}
       - PGID={{ server_data_group_gid }}
-      - TZ=Europe/Amsterdam
+      - TZ={{ server_timezone}}
       - USER=${TRANSMISSION_USERNAME}
       - PASS=${TRANSMISSION_PASSWORD}
       - WHITELIST=${WHITELIST}
@@ -67,7 +67,7 @@ services:
      environment:
        - PUID={{ server_data_user_uid }}
        - PGID={{ server_data_group_gid }}
-       - TZ=Europe/Amsterdam
+       - TZ={{ server_timezone}}
        - WEBUI_PORT=8080
      volumes:
        - {{ qbittorrent_config_path }}:/config

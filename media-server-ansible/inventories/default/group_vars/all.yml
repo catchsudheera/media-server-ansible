@@ -1,4 +1,7 @@
 ---
+# GLOBAL
+gv_server_timezone: Europe/Amsterdam
+
 # USER
 ansible_user: pi
 gv_local_media_user: media-user
@@ -31,5 +34,7 @@ GV_TRANSMISSION_USERNAME: "{{ gv_local_media_user }}"
 GV_TRANSMISSION_PASSWORD: your-transmission-password
 GV_TRANSMISSION_RPC_WHITELIST: 127.0.0.1,192.168.*.*
 
-
+# Reverse Proxy
+gv_server_domain_name: test-mediaserver.ddns.net
+gv_notification_email: catchsudheera@gmail.com
 
