@@ -8,10 +8,13 @@
 
 - name: Create reverse_proxy directories
   file:
-    path: "{{ reverse_proxy_config_path }}"
+    path: "{{ item }}"
     state: directory
     owner: "{{ server_data_dir_user }}"
     group: "{{ server_data_dir_group }}"
+  loop:
+    - "{{ swag_config_path }}"
+    - "{{ heimdall_config_path }}"
 
 - name: Copy Docker compose template
   template:

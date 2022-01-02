@@ -14,7 +14,11 @@ docker_bridge_network_name: "{{ gv_docker_bridge_network_name }}"
 container_data_root: "{{ gv_container_data_root }}"
 reverse_proxy_container_stack_location: "{{ gv_local_media_user_home }}/.container-stack-reverse_proxy"
 
-# Swag
-reverse_proxy_config_path: "{{ container_data_root }}/reverse_proxy/config"
+# swag
+swag_config_path: "{{ container_data_root }}/swag/config"
 server_domain_name: "{{ gv_server_domain_name }}"
 notification_email: "{{ gv_notification_email }}"
+
+# heimdall
+heimdall_config_path: "{{ container_data_root }}/heimdall/config"
+

@@ -3,7 +3,7 @@ version: "3.8"
 services:
   swag:
     image: lscr.io/linuxserver/swag
-    container_name: reverse_proxy
+    container_name: swag
     cap_add:
       - NET_ADMIN
     networks:
@@ -16,13 +16,30 @@ services:
       - VALIDATION=http
       - EMAIL={{ notification_email }}
     volumes:
-      - {{ reverse_proxy_config_path }}:/config
-      - {{ reverse_proxy_container_stack_location }}/additional-config/custom-services.d:/config/custom-services.d
-      - {{ reverse_proxy_container_stack_location }}/additional-config/custom-cont-init.d:/config/custom-cont-init.d
+      - {{ swag_config_path }}:/config
+      - {{ reverse_proxy_container_stack_location }}/additional-config/swag/custom-services.d:/config/custom-services.d
+      - {{ reverse_proxy_container_stack_location }}/additional-config/swag/custom-cont-init.d:/config/custom-cont-init.d
     ports:
       - 443:443
       - 80:80
     restart: unless-stopped
+  heimdall:
+     image: lscr.io/linuxserver/heimdall
+     container_name: heimdall
+     networks:
+       - media_server_network
+     environment:
+       - PUID={{ server_data_dir_uid }}
+       - PGID={{ server_data_dir_gid }}
+       - TZ={{ server_timezone }}
+     volumes:
+       - {{ heimdall_config_path }}:/config
+       - {{ reverse_proxy_container_stack_location }}/additional-config/heimdall/custom-services.d:/config/custom-services.d
+       - {{ reverse_proxy_container_stack_location }}/additional-config/heimdall/custom-cont-init.d:/config/custom-cont-init.d
+     ports:
+       - 8443:443
+       - 8080:80
+     restart: unless-stopped
 
 networks:
   media_server_network:
