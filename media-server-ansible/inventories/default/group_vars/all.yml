@@ -36,5 +36,5 @@ GV_TRANSMISSION_RPC_WHITELIST: 127.0.0.1,192.168.*.*
 
 # Reverse Proxy
 gv_server_domain_name: test-mediaserver.ddns.net
-gv_notification_email: catchsudheera@gmail.com
+gv_notification_email: youremailaddress@gmail.com
 
