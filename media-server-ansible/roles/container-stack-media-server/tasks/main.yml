@@ -63,7 +63,22 @@
         group: "{{ server_data_dir_group }}"
         mode: '0755'
   when: transmission_enable|bool == true
-  tags: test
+
+- name: Create container directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ server_data_dir_user }}"
+    group: "{{ server_data_dir_group }}"
+  loop:
+    - "{{ sonarr_config_path }}"
+    - "{{ sonarr_library_path }}"
+    - "{{ sonarr_download_path }}"
+    - "{{ radarr_config_path }}"
+    - "{{ radarr_library_path }}"
+    - "{{ radarr_download_path }}"
+    - "{{ jackett_config_path }}"
+    - "{{ jackett_torrent_file_path }}"
 
 - name: Start Docker containers using docker-compose
   community.docker.docker_compose:

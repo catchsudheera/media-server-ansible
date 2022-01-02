@@ -32,3 +32,17 @@ VPN_PASSWORD: "{{ GV_VPN_PASSWORD }}"
 VPN_NETWORK_ALLOW_CIDR: "{{ GV_VPN_NETWORK_ALLOW_CIDR }}"
 vpn_container_name: vpn
 
+# sonarr
+sonarr_config_path: "{{ container_data_root }}/sonarr/config"
+sonarr_library_path: "{{ container_data_root }}/sonarr/library"
+sonarr_download_path: "{{ gv_media_download_path }}"
+
+# radarr
+radarr_config_path: "{{ container_data_root }}/radarr/config"
+radarr_library_path: "{{ container_data_root }}/radarr/library"
+radarr_download_path: "{{ gv_media_download_path }}"
+
+# jackett
+jackett_config_path: "{{ container_data_root }}/jackett/config"
+jackett_torrent_file_path: "{{ container_data_root }}/jackett/torrent_files"
+
