@@ -38,6 +38,11 @@ GV_TRANSMISSION_PASSWORD: your-transmission-password
 GV_TRANSMISSION_RPC_WHITELIST: 127.0.0.1,192.168.*.*
 
 # Reverse Proxy
-gv_server_domain_name: test-mediaserver.ddns.net
-gv_notification_email: youremailaddress@gmail.com
+gv_server_domain_name: update-your-hostname-created-via.duckdns.org
+gv_notification_email: your-email-to-receive-ssl-cert-expiration-notification@gmail.com
+
+# DNS
+gv_duckdns_token: bffc2f6e-6ce1-11ec-90d6-0242ac120003
+
+
 

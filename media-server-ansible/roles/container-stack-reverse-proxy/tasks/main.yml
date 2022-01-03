@@ -14,6 +14,7 @@
     group: "{{ server_data_dir_group }}"
   loop:
     - "{{ swag_config_path }}"
+    - "{{ duckdns_config_path }}"
     - "{{ heimdall_config_path }}"
     - "{{ heimdall_config_path }}/www"
     - "{{ heimdall_config_path }}/www/SupportedApps"

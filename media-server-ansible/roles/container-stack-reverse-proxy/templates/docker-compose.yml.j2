@@ -13,7 +13,9 @@ services:
       - PGID={{ server_data_dir_gid }}
       - TZ={{ server_timezone }}
       - URL={{ server_domain_name }}
-      - VALIDATION=http
+      - SUBDOMAINS=wildcard
+      - VALIDATION=duckdns
+      - DUCKDNSTOKEN={{ duckdns_token }}
       - EMAIL={{ notification_email }}
     volumes:
       - {{ swag_config_path }}:/config
@@ -52,6 +54,23 @@ services:
       retries: 3
       start_period: 1m
      restart: unless-stopped
+  duckdns:
+      image: lscr.io/linuxserver/duckdns
+      container_name: duckdns
+      networks:
+       - media_server_network
+      environment:
+        - PUID={{ server_data_dir_uid }}
+        - PGID={{ server_data_dir_gid }}
+        - TZ={{ server_timezone }}
+        - SUBDOMAINS={{ server_domain_name }}
+        - TOKEN={{ duckdns_token }}
+        - LOG_FILE=false
+      volumes:
+        - {{ duckdns_config_path }}:/config
+        - {{ reverse_proxy_container_stack_location }}/additional-config/duckdns/custom-services.d:/config/custom-services.d
+        - {{ reverse_proxy_container_stack_location }}/additional-config/duckdns/custom-cont-init.d:/config/custom-cont-init.d
+      restart: unless-stopped
 
 networks:
   media_server_network:
