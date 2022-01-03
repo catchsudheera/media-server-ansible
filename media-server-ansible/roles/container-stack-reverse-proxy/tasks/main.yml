@@ -16,6 +16,29 @@
     - "{{ swag_config_path }}"
     - "{{ heimdall_config_path }}"
 
+- name: Copy Heimdall database
+  copy:
+    src: heimdall-app.sqlite
+    dest: "{{ heimdall_config_path }}/www/app.sqlite"
+    owner: "{{ server_data_dir_user }}"
+    group: "{{ server_data_dir_group }}"
+
+- name: Installing sqlit3 for heimdall data injection
+  apt:
+    name: sqlite3
+    update_cache: yes
+
+- name: Insert Heimdall items
+  script:
+    cmd: "update-heimdall-db.sh {{ heimdall_config_path }} {{ server_domain_name }} {{ item }}"
+  loop:
+    - sonarr
+    - radarr
+    - transmission
+    - jackett
+    - portainer
+    - uptime-kuma
+
 - name: Copy Docker compose template
   template:
     src: docker-compose.yml.j2

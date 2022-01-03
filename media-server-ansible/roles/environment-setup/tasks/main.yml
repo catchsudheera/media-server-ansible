@@ -49,6 +49,9 @@
       args:
         creates: /usr/local/bin/docker-compose
 
+- name: Add docker network for application containers to use
+  shell: "docker network inspect {{ docker_bridge_network_name }} || docker network create {{ docker_bridge_network_name }}"
+
 - name: Create media and server data directories
   block:
     - name: Mount server data NFS and add docker systemd dependency

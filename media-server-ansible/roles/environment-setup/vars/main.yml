@@ -6,6 +6,9 @@ media_group_name: "{{ gv_local_media_group }}"
 media_group_gid: "{{ gv_local_media_gid }}"
 media_user_home: "{{ gv_local_media_user_home }}"
 
+# Docker network setup
+docker_bridge_network_name: "{{ gv_docker_bridge_network_name }}"
+
 # Directory setup
 
 ## Media data location type. Options : [local, nfs]

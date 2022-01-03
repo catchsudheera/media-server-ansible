@@ -1,14 +1,9 @@
 #!/bin/bash
 
 echo " - Prepare for installation"
-if ansible-playbook site.yml -i inventories/default/hosts.ini --tags stop-stacks  ; then
-    echo "  -- Stacks stopped"
+if ./stop-all.sh  ; then
+    echo ""
 else
-    echo ""
-    echo "+++++++++++++++++++++++++++++++++++    ERROR    +++++++++++++++++++++++++++++++++++++++++++++++"
-    echo "There are running docker containers which did not stop. Check above ansible errors or try running this script again..."
-    echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
-    echo ""
     exit 1
 fi
 

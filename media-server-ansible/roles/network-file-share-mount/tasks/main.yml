@@ -27,7 +27,6 @@
     #noinspection UndefinedVariable
     name: '{{ escaped_mount_path.stdout }}.mount'
     enabled: no
-    state: stopped
 
 - name: Automount unit enable and start
   systemd:

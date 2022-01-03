@@ -30,7 +30,7 @@ services:
       start_period: 1m
     restart: unless-stopped
   heimdall:
-     image: lscr.io/linuxserver/heimdall
+     image: lscr.io/linuxserver/heimdall:2.2.2
      container_name: heimdall
      networks:
        - media_server_network
@@ -55,5 +55,5 @@ services:
 
 networks:
   media_server_network:
-    name: {{ docker_bridge_network_name }}
-    driver: bridge
+    external:
+      name: {{ docker_bridge_network_name }}
