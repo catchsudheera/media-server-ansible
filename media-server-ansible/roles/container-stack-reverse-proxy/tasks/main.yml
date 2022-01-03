@@ -106,6 +106,12 @@
     - { name: uptime-kuma, type: subdomain }
     - { name: heimdall, type: subfolder }
 
+- name: Correct the incorrect server_name for uptime-kuma
+  lineinfile:
+    path: "{{ swag_config_path }}/nginx/proxy-confs/uptime-kuma.subdomain.conf"
+    regexp: '^\s+server_name uptime.\*;$'
+    line: "    server_name uptime-kuma.*;"
+
 - name: Install new nginx config
   copy:
     src: nginx-server.conf
