@@ -15,6 +15,7 @@
   loop:
     - "{{ swag_config_path }}"
     - "{{ heimdall_config_path }}"
+    - "{{ heimdall_config_path }}/www"
 
 - name: Copy Heimdall database
   copy:

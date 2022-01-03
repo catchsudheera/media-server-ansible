@@ -79,6 +79,7 @@
     - "{{ radarr_download_path }}"
     - "{{ jackett_config_path }}"
     - "{{ jackett_torrent_file_path }}"
+    - "{{ jackett_config_path }}/Jackett"
 
 - set_fact:
     sonarr_api_key: "{{ lookup('password', 'api-keys-temp/sonarr chars=ascii_lowercase,digits length=32') }}"
