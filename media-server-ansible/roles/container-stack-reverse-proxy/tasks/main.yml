@@ -16,6 +16,8 @@
     - "{{ swag_config_path }}"
     - "{{ heimdall_config_path }}"
     - "{{ heimdall_config_path }}/www"
+    - "{{ heimdall_config_path }}/www/SupportedApps"
+    - "{{ heimdall_config_path }}/www/icons"
     - "/tmp/heimdall-support"
 
 - name: Copy Heimdall database
@@ -34,9 +36,9 @@
 
 - name: Copy Heimdall support files (remote:remote)
   copy:
-    src: /tmp/heimdall-support/{{ item }}
+    src: "/tmp/heimdall-support/{{ item }}/"
     remote_src: yes
-    dest: "{{ heimdall_config_path }}/www/{{ item }}"
+    dest: "{{ heimdall_config_path }}/www/{{ item }}/"
     owner: "{{ server_data_dir_user }}"
     group: "{{ server_data_dir_group }}"
   loop:
