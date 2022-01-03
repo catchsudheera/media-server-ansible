@@ -80,15 +80,41 @@
     - "{{ jackett_config_path }}"
     - "{{ jackett_torrent_file_path }}"
 
+- set_fact:
+    sonarr_api_key: "{{ lookup('password', 'api-keys-temp/sonarr chars=ascii_lowercase,digits length=32') }}"
+    radarr_api_key: "{{ lookup('password', 'api-keys-temp/radarr chars=ascii_lowercase,digits length=32') }}"
+    jackett_instance_id: "{{ lookup('password', 'api-keys-temp/jackett chars=ascii_lowercase,digits length=64') }}"
+
+- name: Copy Sonarr, Radarr config files
+  template:
+    src: "{{ item.name }}-config.xml.j2"
+    dest: "{{ item.configPath }}/config.xml"
+  loop:
+    - { name: 'sonarr', configPath: "{{ sonarr_config_path }}" }
+    - { name: 'radarr', configPath: "{{ radarr_config_path }}" }
+
+- name: Copy Jackett config file
+  template:
+    src: jackett-config.json.j2
+    dest: "{{ jackett_config_path }}/Jackett/ServerConfig.json"
+
 - name: Start Docker containers using docker-compose
   community.docker.docker_compose:
     project_src: "{{ media_server_container_stack_location }}"
   tags: start-stacks
 
-- name: Stop Docker containers using docker-compose
-  community.docker.docker_compose:
-    project_src: "{{ media_server_container_stack_location }}"
-    state: absent
+- name: Stop Docker containers if running
+  block:
+    - name: Check wether the docker file exist
+      stat:
+        path: "{{ media_server_container_stack_location }}/docker-compose.yml"
+      register: media_server_container_stack_location_docker_compose_file
+
+    - name: Stopping using docker compose
+      community.docker.docker_compose:
+        project_src: "{{ media_server_container_stack_location }}"
+        state: absent
+      when: media_server_container_stack_location_docker_compose_file.stat.exists
   tags: [ 'never', 'stop-stacks' ]
 
 

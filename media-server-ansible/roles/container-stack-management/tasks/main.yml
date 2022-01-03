@@ -25,8 +25,16 @@
     project_src: "{{ management_container_stack_location }}"
   tags: start-stacks
 
-- name: Stop Docker containers using docker-compose
-  community.docker.docker_compose:
-    project_src: "{{ management_container_stack_location }}"
-    state: absent
+- name: Stop Docker containers if running
+  block:
+    - name: Check wether the docker file exist
+      stat:
+        path: "{{ management_container_stack_location }}/docker-compose.yml"
+      register: management_container_stack_location_docker_compose_file
+
+    - name: Stopping using docker compose
+      community.docker.docker_compose:
+        project_src: "{{ management_container_stack_location }}"
+        state: absent
+      when: management_container_stack_location_docker_compose_file.stat.exists
   tags: [ 'never', 'stop-stacks' ]

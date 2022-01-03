@@ -28,12 +28,6 @@
     project_src: "{{ reverse_proxy_container_stack_location }}"
   tags: start-stacks
 
-- name: Stop Docker containers using docker-compose
-  community.docker.docker_compose:
-    project_src: "{{ reverse_proxy_container_stack_location }}"
-    state: absent
-  tags: [ 'never', 'stop-stacks' ]
-
 - name: Wait until Swag container up and create subfolder configs
   wait_for:
     path: "{{ swag_config_path }}/nginx/proxy-confs/{{ item }}.subfolder.conf.sample"
@@ -77,3 +71,17 @@
   community.docker.docker_compose:
     project_src: "{{ reverse_proxy_container_stack_location }}"
     restarted: yes
+
+- name: Stop Docker containers if running
+  block:
+    - name: Check wether the docker file exist
+      stat:
+        path: "{{ reverse_proxy_container_stack_location }}/docker-compose.yml"
+      register: reverse_proxy_container_stack_location_docker_compose_file
+
+    - name: Stopping using docker compose
+      community.docker.docker_compose:
+        project_src: "{{ reverse_proxy_container_stack_location }}"
+        state: absent
+      when: reverse_proxy_container_stack_location_docker_compose_file.stat.exists
+  tags: [ 'never', 'stop-stacks' ]
