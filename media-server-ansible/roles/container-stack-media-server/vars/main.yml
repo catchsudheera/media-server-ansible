@@ -30,6 +30,7 @@ qbittorrent_config_path: "{{ container_data_root }}/{{ qbittorrent_container_nam
 qbittorrent_download_path: "{{ gv_media_download_path }}"
 
 ## nordvpn
+add_vpn_container: "{{ gv_add_vpn_container }}"
 VPN_USERNAME: "{{ GV_VPN_USERNAME }}"
 VPN_PASSWORD: "{{ GV_VPN_PASSWORD }}"
 VPN_NETWORK_ALLOW_CIDR: "{{ GV_VPN_NETWORK_ALLOW_CIDR }}"

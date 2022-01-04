@@ -7,6 +7,8 @@ server_data_dir_uid: "{{ gv_local_media_uid }}"
 server_data_dir_group: "{{ gv_local_media_group }}"
 server_data_dir_gid: "{{ gv_local_media_gid }}"
 
+add_vpn_container: "{{ gv_add_vpn_container }}"
+
 # Docker network setup
 docker_bridge_network_name: "{{ gv_docker_bridge_network_name }}"
 

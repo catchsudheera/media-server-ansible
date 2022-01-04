@@ -31,6 +31,7 @@ gv_container_data_root: "{{ gv_server_data_root_local_mount_path }}/{{ gv_contai
 GV_VPN_USERNAME: your-email-address
 GV_VPN_PASSWORD: your-vpn-password
 GV_VPN_NETWORK_ALLOW_CIDR: 192.168.178.0/24
+gv_add_vpn_container: true
 
 # TRANSMISSION
 GV_TRANSMISSION_USERNAME: "{{ gv_local_media_user }}"

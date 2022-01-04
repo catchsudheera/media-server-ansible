@@ -106,6 +106,14 @@
     - { name: uptime-kuma, type: subdomain }
     - { name: heimdall, type: subfolder }
 
+- name: Set subdomain app name to vpn container for transmission
+  copy:
+    src: transmission.subdomain.conf
+    dest: "{{ swag_config_path }}/nginx/proxy-confs/transmission.subdomain.conf"
+    owner: "{{ server_data_dir_user }}"
+    group: "{{ server_data_dir_group }}"
+  when: add_vpn_container|bool == true
+
 - name: Correct the incorrect server_name for uptime-kuma
   lineinfile:
     path: "{{ swag_config_path }}/nginx/proxy-confs/uptime-kuma.subdomain.conf"

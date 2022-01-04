@@ -21,6 +21,7 @@ services:
       - PROTOCOL=TCP
       - OBFUSCATE=Enable
       - NETWORK=${NETWORK}
+      - POST_CONNECT=iptables -A INPUT -p tcp --dport 9091 -j ACCEPT
     ports:
 {% if transmission_enable == true %}
       - 9091:9091
@@ -45,9 +46,6 @@ services:
       - PUID={{ server_data_user_uid }}
       - PGID={{ server_data_group_gid }}
       - TZ={{ server_timezone}}
-      - USER=${TRANSMISSION_USERNAME}
-      - PASS=${TRANSMISSION_PASSWORD}
-      - WHITELIST=${WHITELIST}
     volumes:
       - {{ transmission_config_path }}:/config
       - {{ transmission_download_path }}:/downloads
