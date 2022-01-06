@@ -13,7 +13,7 @@ services:
       - {{ uptime_kuma_config_path }}:/app/data
     ports:
       - 3001:3001
-    restart: unless-stopped
+    restart: always
 
 networks:
   media_server_network:

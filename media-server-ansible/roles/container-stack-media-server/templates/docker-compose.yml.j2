@@ -37,7 +37,7 @@ services:
       timeout: 30s
       retries: 5
       start_period: 40s
-    restart: unless-stopped
+    restart: always
 {% if transmission_enable == true %}
   transmission:
     image: ghcr.io/linuxserver/transmission
@@ -55,7 +55,7 @@ services:
       timeout: 10s
       retries: 3
       start_period: 2m
-    restart: unless-stopped
+    restart: always
     network_mode: service:vpn
     depends_on:
       vpn:
@@ -79,7 +79,7 @@ services:
        timeout: 10s
        retries: 3
        start_period: 2m
-     restart: unless-stopped
+     restart: always
      network_mode: service:vpn
      depends_on:
        vpn:
@@ -106,7 +106,7 @@ services:
        timeout: 10s
        retries: 3
        start_period: 2m
-      restart: unless-stopped
+      restart: always
   radarr:
       image: lscr.io/linuxserver/radarr
       container_name: radarr
@@ -128,7 +128,7 @@ services:
        timeout: 10s
        retries: 3
        start_period: 2m
-      restart: unless-stopped
+      restart: always
   jackett:
       image: lscr.io/linuxserver/jackett
       container_name: jackett
@@ -150,7 +150,7 @@ services:
        timeout: 10s
        retries: 3
        start_period: 2m
-      restart: unless-stopped
+      restart: always
 
 networks:
   vpn_local:

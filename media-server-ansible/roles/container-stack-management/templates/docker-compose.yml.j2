@@ -9,7 +9,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /etc/localtime:/etc/localtime:ro
-    restart: unless-stopped
+    restart: always
     environment:
       - AUTOHEAL_INTERVAL=30
       - CURL_TIMEOUT=30
@@ -19,7 +19,7 @@ services:
     container_name: watchtower
     networks:
       - media_server_network
-    restart: unless-stopped
+    restart: always
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /etc/localtime:/etc/localtime:ro
@@ -33,7 +33,7 @@ services:
     networks:
       - media_server_network
     command: -H unix:///var/run/docker.sock
-    restart: unless-stopped
+    restart: always
     ports:
       - 8005:8000
       - 9005:9000

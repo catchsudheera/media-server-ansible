@@ -30,7 +30,7 @@ services:
       timeout: 10s
       retries: 3
       start_period: 1m
-    restart: unless-stopped
+    restart: always
   heimdall:
      image: lscr.io/linuxserver/heimdall:2.2.2
      container_name: heimdall
@@ -53,7 +53,7 @@ services:
       timeout: 10s
       retries: 3
       start_period: 1m
-     restart: unless-stopped
+     restart: always
   duckdns:
       image: lscr.io/linuxserver/duckdns
       container_name: duckdns
@@ -70,7 +70,7 @@ services:
         - {{ duckdns_config_path }}:/config
         - {{ reverse_proxy_container_stack_location }}/additional-config/duckdns/custom-services.d:/config/custom-services.d
         - {{ reverse_proxy_container_stack_location }}/additional-config/duckdns/custom-cont-init.d:/config/custom-cont-init.d
-      restart: unless-stopped
+      restart: always
 
 networks:
   media_server_network:
