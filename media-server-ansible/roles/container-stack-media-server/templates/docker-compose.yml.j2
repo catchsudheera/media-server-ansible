@@ -24,7 +24,7 @@ services:
       - POST_CONNECT=iptables -A INPUT -p tcp --dport 9091 -j ACCEPT
     ports:
 {% if transmission_enable == true %}
-      - 9091:9091
+      - 9092:9091
 {% endif %}
 {% if qbittorrent_enable == true %}
       - 6881:6881

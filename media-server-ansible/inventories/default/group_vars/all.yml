@@ -47,3 +47,7 @@ gv_duckdns_token: bffc2f6e-6ce1-11ec-90d6-0242ac120003
 
 
 
+# Dashboard
+gv_dashboard_username: my-user
+gv_dashboard_password: my-password
+gv_dashboard_user_email: my-user@gmail.com

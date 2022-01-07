@@ -71,6 +71,16 @@ services:
         - {{ reverse_proxy_container_stack_location }}/additional-config/duckdns/custom-services.d:/config/custom-services.d
         - {{ reverse_proxy_container_stack_location }}/additional-config/duckdns/custom-cont-init.d:/config/custom-cont-init.d
       restart: always
+  authelia:
+       image: authelia/authelia
+       container_name: authelia
+       networks:
+        - media_server_network
+       environment:
+         - TZ={{ server_timezone }}
+       volumes:
+         - {{ authelia_config_path }}:/config
+       restart: always
 
 networks:
   media_server_network:

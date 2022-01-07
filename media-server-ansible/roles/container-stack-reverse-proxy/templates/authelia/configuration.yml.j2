@@ -1,0 +1,48 @@
+server:
+  host: 0.0.0.0
+  port: 9091
+  read_buffer_size: 4096
+  write_buffer_size: 4096
+  path: "authelia"
+log:
+  level: debug
+jwt_secret: {{ authelia_jwt_secret }}
+default_redirection_url: https://www.{{ server_domain_name }}
+
+authentication_backend:
+  disable_reset_password: false
+  file:
+    path: /config/users_database.yml
+    password:
+      algorithm: argon2id
+      iterations: 1
+      key_length: 32
+      salt_length: 16
+      memory: 512
+      parallelism: 8
+access_control:
+  default_policy: deny
+  rules:
+    - domain:
+      - {{ server_domain_name }}
+      - "*.{{ server_domain_name }}"
+      policy: one_factor
+session:
+  name: authelia_session
+  secret: {{ authelia_session_secret }}
+  expiration: 1h
+  inactivity: 5m
+  remember_me_duration: 1M
+  domain: {{ server_domain_name }}
+regulation:
+  max_retries: 3
+  find_time: 2m
+  ban_time: 5m
+storage:
+  encryption_key: {{ authelia_storage_secret }}
+  local:
+    path: /config/db.sqlite3
+notifier:
+  disable_startup_check: false
+  filesystem:
+    filename: /config/notification.txt
