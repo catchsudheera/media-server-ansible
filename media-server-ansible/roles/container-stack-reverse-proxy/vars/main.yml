@@ -21,6 +21,22 @@ swag_config_path: "{{ container_data_root }}/swag/config"
 server_domain_name: "{{ gv_server_domain_name }}"
 notification_email: "{{ gv_notification_email }}"
 
+reverse_proxy_app_list:
+  - name: sonarr
+    type: subdomain
+  - name: radarr
+    type: subdomain
+  - name: transmission
+    type: subdomain
+  - name: jackett
+    type: subdomain
+  - name: portainer
+    type: subdomain
+  - name: uptime-kuma
+    type: subdomain
+  - name: heimdall
+    type: subfolder
+
 # heimdall
 heimdall_config_path: "{{ container_data_root }}/heimdall/config"
 
@@ -29,6 +45,7 @@ duckdns_config_path: "{{ container_data_root }}/duckdns/config"
 duckdns_token: "{{ gv_duckdns_token }}"
 
 # authelia
+authelia_enable: "{{ gv_authelia_enable }}"
 authelia_config_path: "{{ reverse_proxy_container_stack_location }}/config/authelia"
 authelia_user_username: "{{ gv_dashboard_username }}"
 authelia_user_password: "{{ gv_dashboard_password }}"

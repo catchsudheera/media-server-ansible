@@ -30,7 +30,9 @@ server {
     #include /config/nginx/ldap.conf;
 
     # enable for Authelia
-    #include /config/nginx/authelia-server.conf;
+{% if authelia_enable == true %}
+    include /config/nginx/authelia-server.conf;
+{% endif %}
 
     client_max_body_size 0;
 

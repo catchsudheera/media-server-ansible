@@ -71,6 +71,7 @@ services:
         - {{ reverse_proxy_container_stack_location }}/additional-config/duckdns/custom-services.d:/config/custom-services.d
         - {{ reverse_proxy_container_stack_location }}/additional-config/duckdns/custom-cont-init.d:/config/custom-cont-init.d
       restart: always
+{% if authelia_enable == true %}
   authelia:
        image: authelia/authelia
        container_name: authelia
@@ -81,6 +82,7 @@ services:
        volumes:
          - {{ authelia_config_path }}:/config
        restart: always
+{% endif %}
 
 networks:
   media_server_network:
