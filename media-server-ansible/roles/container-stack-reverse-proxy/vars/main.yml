@@ -20,6 +20,7 @@ reverse_proxy_container_stack_location: "{{ gv_local_media_user_home }}/.contain
 swag_config_path: "{{ container_data_root }}/swag/config"
 server_domain_name: "{{ gv_server_domain_name }}"
 notification_email: "{{ gv_notification_email }}"
+use_lets_encrypt_staging_server: "{{ gv_use_lets_encrypt_staging_server }}"
 
 reverse_proxy_app_list:
   - name: sonarr

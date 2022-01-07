@@ -17,6 +17,9 @@ services:
       - VALIDATION=duckdns
       - DUCKDNSTOKEN={{ duckdns_token }}
       - EMAIL={{ notification_email }}
+{% if use_lets_encrypt_staging_server == true %}
+      - STAGING=true
+{% endif %}
     volumes:
       - {{ swag_config_path }}:/config
       - {{ reverse_proxy_container_stack_location }}/additional-config/swag/custom-services.d:/config/custom-services.d
