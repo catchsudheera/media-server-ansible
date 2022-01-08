@@ -43,15 +43,20 @@ ansible-galaxy collection install community.docker
 
 Google it if you have no idea what this is.
 
-#5. Configure ansible playbook
+#5. Register a free DuckDNS for free hostname
+ - Visit https://www.duckdns.org/ and register a free account there.
+ - Note down the `token` for the created account. Use it as the `gv_duckdns_token` variable in `ansible-playbook/inventories/default/group_vars/all.yml` 
+ - Add a new domain name there and note down it. Use it as the `gv_server_domain_name` variable in `ansible-playbook/inventories/default/group_vars/all.yml` 
+ 
+#6. Configure ansible playbook
 
 ### Update hosts
 
-update the `media-server-ansible/inventories/default/hosts.ini` file with your `media-server` ip address or hostname
+update the `ansible-playbook/inventories/default/hosts.ini` file with your `media-server` ip address or hostname
 
-### Configurie
+### Configure
 
-Edit the file `media-server-ansible/inventories/default/group_vars/all.yml` and update variables if needed. Read following 
+Edit the file `ansible-playbook/inventories/default/group_vars/all.yml` and update variables if needed. Read following 
 section and `App Specific configuration` to get a better understanding variables and their usage.
 
 ## App specific configuration
@@ -77,7 +82,7 @@ If using a NFS share mount role, make sure on the NAS server side,
 - Default username is `admin`, password is `adminadmin`, change it via the webui (`<your-ip>:8080`)
 
 
-#6. Start installation
+#7. Start installation
 
 Once the configuration is updated and then only use following command to start the installation
 
@@ -87,6 +92,14 @@ cd ansible-playbook
 ```
 
 Once the installation script completed successfully. Visit https://www.<hostname-you-enterted> to visit the dashboard.
+
+#8 Register the SSL cert against the let's encrypt production servers
+- For the initial setup we registered the domain SSL against the staging servers of Let's Encrypt service. This will result
+in a browser complaint stating that your connection is not secure. This step in place to avoid let's encrypt service from
+banning you for multiple unsuccessful requests if we got anything wrong in the setup.  
+
+If everything looks good after the first install, (Check logs of `swag` container server on the `media-server` : `docker logs -f swag`)
+set `gv_use_lets_encrypt_staging_server` to `false` and rerun the  `./install.sh` script. 
 
 ## Container Stack operations
 Once the installation is complete, you can use following commands from your host machine to start/stop all apps.
