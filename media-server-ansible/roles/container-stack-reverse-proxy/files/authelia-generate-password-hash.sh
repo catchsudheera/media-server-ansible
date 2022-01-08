@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker run authelia/authelia:latest authelia hash-password "$1" | sed 's/Password hash: //'
+docker run authelia/authelia:latest authelia hash-password "$1" 2>/dev/null | grep "Password hash: " | sed 's/Password hash: //'
