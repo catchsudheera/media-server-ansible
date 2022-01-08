@@ -63,26 +63,26 @@
     - portainer
     - uptime-kuma
 
-- name: Setting facts for Authelia secret keys
-  set_fact:
-    authelia_jwt_secret: "{{ lookup('password', 'api-keys-temp/authelia_jwt_secret chars=ascii_lowercase length=30') }}"
-    authelia_session_secret: "{{ lookup('password', 'api-keys-temp/authelia_session_secret chars=ascii_lowercase length=16') }}"
-    authelia_storage_secret: "{{ lookup('password', 'api-keys-temp/authelia_storage_secret chars=ascii_lowercase length=24') }}"
-  when: authelia_enable|bool == true
+- name: Configure Authelia
+  block:
+    - name: Setting facts for Authelia secret keys
+      set_fact:
+        authelia_jwt_secret: "{{ lookup('password', 'api-keys-temp/authelia_jwt_secret chars=ascii_lowercase length=30') }}"
+        authelia_session_secret: "{{ lookup('password', 'api-keys-temp/authelia_session_secret chars=ascii_lowercase length=16') }}"
+        authelia_storage_secret: "{{ lookup('password', 'api-keys-temp/authelia_storage_secret chars=ascii_lowercase length=24') }}"
 
-- name: Generate the Authelia user password hash
-  script:
-    cmd: "authelia-generate-password-hash.sh {{ authelia_user_password }}"
-  register: authelia_user_password_hash
-  when: authelia_enable|bool == true
+    - name: Generate the Authelia user password hash
+      script:
+        cmd: "authelia-generate-password-hash.sh {{ authelia_user_password }}"
+      register: authelia_user_password_hash
 
-- name: Copy Authelia configs
-  template:
-    src: "authelia/{{ item }}.j2"
-    dest: "{{ authelia_config_path }}/{{ item }}"
-  loop:
-    - "configuration.yml"
-    - "users_database.yml"
+    - name: Copy Authelia configs
+      template:
+        src: "authelia/{{ item }}.j2"
+        dest: "{{ authelia_config_path }}/{{ item }}"
+      loop:
+        - "configuration.yml"
+        - "users_database.yml"
   when: authelia_enable|bool == true
 
 - name: Copy Docker compose template
