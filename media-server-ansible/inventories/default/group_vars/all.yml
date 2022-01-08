@@ -27,6 +27,10 @@ gv_media_download_path: "{{ gv_media_data_root_local_mount_path}}/downloads"
 gv_container_data_dir_name: container_data
 gv_container_data_root: "{{ gv_server_data_root_local_mount_path }}/{{ gv_container_data_dir_name | default('container_data') }}"
 
+# Torrent client
+gv_transmission_enable: true
+gv_qbittorrent_enable: false
+
 # VPN
 gv_add_vpn_container: true
 GV_VPN_USERNAME: your-email-address

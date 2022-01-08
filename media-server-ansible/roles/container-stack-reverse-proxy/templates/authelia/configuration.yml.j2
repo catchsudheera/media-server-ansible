@@ -30,9 +30,9 @@ access_control:
 session:
   name: authelia_session
   secret: {{ authelia_session_secret }}
-  expiration: 1h
-  inactivity: 5m
-  remember_me_duration: 1M
+  expiration: 4h
+  inactivity: 1h
+  remember_me_duration: 5M
   domain: {{ server_domain_name }}
 regulation:
   max_retries: 3

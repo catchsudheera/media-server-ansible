@@ -25,18 +25,45 @@ use_lets_encrypt_staging_server: "{{ gv_use_lets_encrypt_staging_server }}"
 reverse_proxy_app_list:
   - name: sonarr
     type: subdomain
+    proxy_conf_enable: true
+    heimdall_enable: true
   - name: radarr
     type: subdomain
-  - name: transmission
-    type: subdomain
+    proxy_conf_enable: true
+    heimdall_enable: true
   - name: jackett
     type: subdomain
+    proxy_conf_enable: true
+    heimdall_enable: true
   - name: portainer
     type: subdomain
+    proxy_conf_enable: true
+    heimdall_enable: true
   - name: uptime-kuma
     type: subdomain
+    proxy_conf_enable: true
+    heimdall_enable: true
   - name: heimdall
     type: subfolder
+    proxy_conf_enable: true
+    heimdall_enable: false
+  - name: transmission
+    type: subdomain
+    proxy_conf_enable: "{{ transmission_enable }}"
+    heimdall_enable: "{{ transmission_enable }}"
+  - name: qbittorrent
+    type: subdomain
+    proxy_conf_enable: "{{ qbittorrent_enable }}"
+    heimdall_enable: "{{ qbittorrent_enable }}"
+
+users:
+  - name: john
+    email: john@example.com
+  - name: jane
+    email: jane@example.com
+  - name: fred
+    email: fred@example.com
+    password: 123!abc
 
 # heimdall
 heimdall_config_path: "{{ container_data_root }}/heimdall/config"

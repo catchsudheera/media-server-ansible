@@ -54,14 +54,8 @@
 
 - name: Insert Heimdall items
   script:
-    cmd: "update-heimdall-db.sh {{ heimdall_config_path }} {{ server_domain_name }} {{ item }}"
-  loop:
-    - sonarr
-    - radarr
-    - transmission
-    - jackett
-    - portainer
-    - uptime-kuma
+    cmd: "update-heimdall-db.sh {{ heimdall_config_path }} {{ server_domain_name }} {{ item.name }}"
+  with_list: "{{ reverse_proxy_app_list | selectattr('heimdall_enable', '==', true) | list}}"
 
 - name: Configure Authelia
   block:
@@ -100,7 +94,7 @@
 - name: Wait until Swag container up and create subfolder configs
   wait_for:
     path: "{{ swag_config_path }}/nginx/proxy-confs/{{ item.name }}.{{ item.type }}.conf.sample"
-  with_list: "{{ reverse_proxy_app_list }}"
+  with_list: "{{ reverse_proxy_app_list | selectattr('proxy_conf_enable', '==', true) | list}}"
 
 - name: Wait until Swag container up and create default config
   wait_for:
@@ -113,22 +107,28 @@
     remote_src: yes
     owner: "{{ server_data_dir_user }}"
     group: "{{ server_data_dir_group }}"
-  with_list: "{{ reverse_proxy_app_list }}"
+  with_list: "{{ reverse_proxy_app_list | selectattr('proxy_conf_enable', '==', true) | list}}"
 
 - name: Set subdomain app name to vpn container for transmission
-  copy:
-    src: transmission.subdomain.conf
-    dest: "{{ swag_config_path }}/nginx/proxy-confs/transmission.subdomain.conf"
-    owner: "{{ server_data_dir_user }}"
-    group: "{{ server_data_dir_group }}"
-  when: add_vpn_container|bool == true
+  replace:
+    path: "{{ swag_config_path }}/nginx/proxy-confs/transmission.subdomain.conf"
+    regexp: '^\s+set $upstream_app transmission;$'
+    replace: "        set $upstream_app vpn;"
+  when: add_vpn_container|bool == true and transmission_enable|bool ==true
+
+- name: Set subdomain app name to vpn container for qbittorrent
+  replace:
+    path: "{{ swag_config_path }}/nginx/proxy-confs/qbittorrent.subdomain.conf"
+    regexp: '^\s+set $upstream_app qbittorrent;$'
+    replace: "        set $upstream_app vpn;"
+  when: add_vpn_container|bool == true and qbittorrent_enable|bool ==true
 
 - name: Enabling Authelia server for apps
   replace:
     path: "{{ swag_config_path }}/nginx/proxy-confs/{{ item.name }}.{{ item.type }}.conf"
     regexp: '^\s+\#include /config/nginx/authelia-server.conf;$'
     replace: "    include /config/nginx/authelia-server.conf;"
-  with_list: "{{ reverse_proxy_app_list }}"
+  with_list: "{{ reverse_proxy_app_list | selectattr('proxy_conf_enable', '==', true) | list}}"
   when: authelia_enable|bool == true
 
 - name: Enabling Authelia location for apps
@@ -136,7 +136,7 @@
     path: "{{ swag_config_path }}/nginx/proxy-confs/{{ item.name }}.{{ item.type }}.conf"
     regexp: '^\s+\#include /config/nginx/authelia-location.conf;$'
     replace: "    include /config/nginx/authelia-location.conf;"
-  with_list: "{{ reverse_proxy_app_list }}"
+  with_list: "{{ reverse_proxy_app_list | selectattr('proxy_conf_enable', '==', true) | list}}"
   when: authelia_enable|bool == true
 
 - name: Correct the incorrect server_name for uptime-kuma
