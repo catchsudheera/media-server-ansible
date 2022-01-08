@@ -35,6 +35,7 @@
     dest: "{{ media_server_container_stack_location }}/.env"
     owner: "{{ server_data_dir_user }}"
     group: "{{ server_data_dir_group }}"
+  when: add_vpn_container|bool == true
 
 - name: Install Transmission
   block:
@@ -111,11 +112,16 @@
         path: "{{ media_server_container_stack_location }}/docker-compose.yml"
       register: media_server_container_stack_location_docker_compose_file
 
+    - name: Check validity of compose file
+      shell: "docker-compose -f {{ media_server_container_stack_location }}/docker-compose.yml config"
+      register: media_server_container_stack_docker_compose_file_validate
+      ignore_errors: yes
+
     - name: Stopping using docker compose
       community.docker.docker_compose:
         project_src: "{{ media_server_container_stack_location }}"
         state: absent
-      when: media_server_container_stack_location_docker_compose_file.stat.exists
+      when: media_server_container_stack_location_docker_compose_file.stat.exists and media_server_container_stack_docker_compose_file_validate.failed|bool != true
   tags: [ 'never', 'stop-stacks' ]
 
 

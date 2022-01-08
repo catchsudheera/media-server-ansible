@@ -16,9 +16,6 @@ media_server_container_stack_location: "{{ gv_local_media_user_home }}/.containe
 
 ## transmission
 transmission_enable: true
-TRANSMISSION_USERNAME: "{{ GV_TRANSMISSION_USERNAME}}"
-TRANSMISSION_PASSWORD: "{{ GV_TRANSMISSION_PASSWORD }}"
-TRANSMISSION_RPC_WHITELIST: "{{ GV_TRANSMISSION_RPC_WHITELIST }}"
 transmission_container_name: transmission
 transmission_config_path: "{{ container_data_root }}/{{ transmission_container_name }}/config"
 transmission_download_path: "{{ gv_media_download_path }}"

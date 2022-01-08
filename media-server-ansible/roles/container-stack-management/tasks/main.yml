@@ -32,9 +32,14 @@
         path: "{{ management_container_stack_location }}/docker-compose.yml"
       register: management_container_stack_location_docker_compose_file
 
+    - name: Check validity of compose file
+      shell: "docker-compose -f {{ management_container_stack_location }}/docker-compose.yml config"
+      register: management_container_stack_docker_compose_file_validate
+      ignore_errors: yes
+
     - name: Stopping using docker compose
       community.docker.docker_compose:
         project_src: "{{ management_container_stack_location }}"
         state: absent
-      when: management_container_stack_location_docker_compose_file.stat.exists
+      when: management_container_stack_location_docker_compose_file.stat.exists and management_container_stack_docker_compose_file_validate.failed|bool != true
   tags: [ 'never', 'stop-stacks' ]

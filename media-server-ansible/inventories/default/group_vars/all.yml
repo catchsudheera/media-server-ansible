@@ -28,26 +28,20 @@ gv_container_data_dir_name: container_data
 gv_container_data_root: "{{ gv_server_data_root_local_mount_path }}/{{ gv_container_data_dir_name | default('container_data') }}"
 
 # VPN
+gv_add_vpn_container: true
 GV_VPN_USERNAME: your-email-address
 GV_VPN_PASSWORD: your-vpn-password
 GV_VPN_NETWORK_ALLOW_CIDR: 192.168.178.0/24
-gv_add_vpn_container: true
-
-# TRANSMISSION
-GV_TRANSMISSION_USERNAME: "{{ gv_local_media_user }}"
-GV_TRANSMISSION_PASSWORD: your-transmission-password
-GV_TRANSMISSION_RPC_WHITELIST: 127.0.0.1,192.168.*.*
 
 # Reverse Proxy
 gv_server_domain_name: update-your-hostname-created-via.duckdns.org
 gv_notification_email: your-email-to-receive-ssl-cert-expiration-notification@gmail.com
 
+# Following has to set to false once initial testing is done
 gv_use_lets_encrypt_staging_server: true
 
 # DNS
 gv_duckdns_token: bffc2f6e-6ce1-11ec-90d6-0242ac120003
-
-
 
 # Dashboard
 gv_authelia_enable: true
