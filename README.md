@@ -79,7 +79,7 @@ If using a NFS share mount role, make sure on the NAS server side,
 ### qbittorrent
 
 - Enable/Disable using `qbittorrent_enable` variable in the role. Disabled by default
-- Default username is `admin`, password is `adminadmin`, change it via the webui (`<your-ip>:8080`)
+- Default username is `admin`, password is `adminadmin`, change it via the webui.
 
 
 #7. Start installation
