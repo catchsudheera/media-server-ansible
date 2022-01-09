@@ -91,7 +91,7 @@ cd ansible-playbook
 ./install.sh
 ```
 
-Once the installation script completed successfully. Visit https://www.<hostname-you-enterted> to visit the dashboard.
+Once the installation script completed successfully. Visit https://www.hostname-you-configured to visit the dashboard.
 
 #8 Register the SSL cert against the let's encrypt production servers
 - For the initial setup we registered the domain SSL against the staging servers of Let's Encrypt service. This will result
