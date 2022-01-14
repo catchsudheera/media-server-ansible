@@ -18,13 +18,13 @@ media_server_container_stack_location: "{{ gv_local_media_user_home }}/.containe
 transmission_enable: "{{ gv_transmission_enable }}"
 transmission_container_name: transmission
 transmission_config_path: "{{ container_data_root }}/{{ transmission_container_name }}/config"
-transmission_download_path: "{{ gv_media_download_path }}"
+transmission_download_path: "{{ gv_media_data_root_local_mount_path }}/downloads"
 
 ## qbittorrent
 qbittorrent_enable: "{{ gv_qbittorrent_enable }}"
 qbittorrent_container_name: qbittorrent
 qbittorrent_config_path: "{{ container_data_root }}/{{ qbittorrent_container_name }}/config"
-qbittorrent_download_path: "{{ gv_media_download_path }}"
+qbittorrent_download_path: "{{ gv_media_data_root_local_mount_path }}/downloads"
 
 ## nordvpn
 add_vpn_container: "{{ gv_add_vpn_container }}"
@@ -35,13 +35,13 @@ vpn_container_name: vpn
 
 # sonarr
 sonarr_config_path: "{{ container_data_root }}/sonarr/config"
-sonarr_library_path: "{{ container_data_root }}/sonarr/library"
-sonarr_download_path: "{{ gv_media_download_path }}"
+sonarr_library_path: "{{ gv_media_data_root_local_mount_path }}/data/movies"
+sonarr_download_path: "{{ gv_media_data_root_local_mount_path }}/downloads"
 
 # radarr
 radarr_config_path: "{{ container_data_root }}/radarr/config"
-radarr_library_path: "{{ container_data_root }}/radarr/library"
-radarr_download_path: "{{ gv_media_download_path }}"
+radarr_library_path: "{{ gv_media_data_root_local_mount_path }}/data/movies"
+radarr_download_path: "{{ gv_media_data_root_local_mount_path }}/downloads"
 
 # jackett
 jackett_config_path: "{{ container_data_root }}/jackett/config"

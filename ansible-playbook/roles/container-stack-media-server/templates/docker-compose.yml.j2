@@ -34,7 +34,7 @@ services:
       - TZ={{ server_timezone}}
     volumes:
       - {{ radarr_config_path }}:/config
-      - {{ radarr_library_path }}:/tv
+      - {{ radarr_library_path }}:/movies
       - {{ radarr_download_path }}:/downloads
     ports:
      - 7878:7878
