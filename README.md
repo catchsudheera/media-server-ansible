@@ -1,5 +1,10 @@
 # Media Server Setup
 
+<p align="center">
+  <img src="resources/SystemArch.svg">
+</p>
+<!--- Vector source : https://vectr.com/design/editor/6d3603f7-5742-49af-9653-58a888065fc3 --->
+
 ## Terminology
 - `media-server` : The remote server you are about to configure
 - `host-server` : The host machine you are working on
