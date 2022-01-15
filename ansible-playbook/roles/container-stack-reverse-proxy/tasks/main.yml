@@ -114,14 +114,14 @@
     path: "{{ swag_config_path }}/nginx/proxy-confs/transmission.subdomain.conf"
     regexp: '^\s+set $upstream_app transmission;$'
     replace: "        set $upstream_app vpn;"
-  when: add_vpn_container|bool == true and transmission_enable|bool ==true
+  when: add_vpn_container|bool == true and transmission_enable|bool == true
 
 - name: Set subdomain app name to vpn container for qbittorrent
   replace:
     path: "{{ swag_config_path }}/nginx/proxy-confs/qbittorrent.subdomain.conf"
     regexp: '^\s+set $upstream_app qbittorrent;$'
     replace: "        set $upstream_app vpn;"
-  when: add_vpn_container|bool == true and qbittorrent_enable|bool ==true
+  when: add_vpn_container|bool == true and qbittorrent_enable|bool == true
 
 - name: Enabling Authelia server for apps
   replace:
