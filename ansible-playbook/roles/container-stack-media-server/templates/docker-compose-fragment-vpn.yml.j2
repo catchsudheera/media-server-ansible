@@ -46,6 +46,7 @@ transmission:
   volumes:
     - {{ transmission_config_path }}:/config
     - {{ transmission_download_path }}:/downloads
+    - {{ transmission_additional_config_path }}/scripts:/scripts
   healthcheck:
     test: ["CMD-SHELL", "( curl -s https://api.nordvpn.com/vpn/check/full | grep 'Protected' && curl -s -X GET -I http://localhost:9091/transmission/web/ | grep '200 OK' ) || exit 1"]
     interval: 30s

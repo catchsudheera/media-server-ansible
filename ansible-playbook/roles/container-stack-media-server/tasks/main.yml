@@ -47,7 +47,8 @@
         group: "{{ server_data_dir_group }}"
       loop:
         - "{{ transmission_download_path }}"
-        - "{{ transmission_config_path }}/scripts"
+        - "{{ transmission_additional_config_path }}"
+        - "{{ transmission_additional_config_path }}/scripts"
 
     - name: Copy transmission settings file
       template:
@@ -59,7 +60,7 @@
     - name: Copy transmission post download script file
       copy:
         src: post-torrent-download.sh
-        dest: "{{ transmission_config_path }}/scripts/post-torrent-download.sh"
+        dest: "{{ transmission_additional_config_path }}/scripts/post-torrent-download.sh"
         owner: "{{ server_data_dir_user }}"
         group: "{{ server_data_dir_group }}"
         mode: '0755'

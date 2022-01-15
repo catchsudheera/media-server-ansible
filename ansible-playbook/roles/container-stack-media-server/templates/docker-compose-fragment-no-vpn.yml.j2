@@ -9,6 +9,7 @@ transmission:
   volumes:
     - {{ transmission_config_path }}:/config
     - {{ transmission_download_path }}:/downloads
+    - {{ transmission_additional_config_path }}/scripts:/scripts
   ports:
     - 9092:9092
   healthcheck:

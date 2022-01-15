@@ -19,6 +19,7 @@ transmission_enable: "{{ gv_transmission_enable }}"
 transmission_container_name: transmission
 transmission_config_path: "{{ container_data_root }}/{{ transmission_container_name }}/config"
 transmission_download_path: "{{ gv_media_data_root_local_mount_path }}/downloads"
+transmission_additional_config_path: "{{ media_server_container_stack_location }}/additional-config/transmission"
 
 ## qbittorrent
 qbittorrent_enable: "{{ gv_qbittorrent_enable }}"
