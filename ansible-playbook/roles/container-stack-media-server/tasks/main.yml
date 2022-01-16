@@ -22,6 +22,17 @@
     name: [p7zip-full, p7zip]
     update_cache: yes
 
+- name: Install vpn type NordLynx
+  block:
+    - name: Install dependencies
+      apt:
+        name: wireguard
+    - name: Generate the private key
+      script:
+        cmd: "vpn-nordlynx-private-key-generate.sh {{ vpn_email }} {{ vpn_password }}"
+      register: nordlynx_private_key
+  when: add_vpn_container|bool == true and vpn_type == 'nordlynx'
+
 - name: Copy Docker compose template
   template:
     src: docker-compose.yml.j2
@@ -35,7 +46,7 @@
     dest: "{{ media_server_container_stack_location }}/.env"
     owner: "{{ server_data_dir_user }}"
     group: "{{ server_data_dir_group }}"
-  when: add_vpn_container|bool == true
+  when: add_vpn_container|bool == true and vpn_type == 'openvpn'
 
 - name: Install Transmission
   block:

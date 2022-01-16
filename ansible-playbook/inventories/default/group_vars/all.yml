@@ -32,9 +32,9 @@ gv_qbittorrent_enable: false
 
 # VPN
 gv_add_vpn_container: true
-GV_VPN_USERNAME: your-email-address
-GV_VPN_PASSWORD: your-vpn-password
-GV_VPN_NETWORK_ALLOW_CIDR: 192.168.178.0/24
+gv_vpn_email: your-email-address
+gv_vpn_password: your-vpn-password
+gv_vpn_network_allow_cidr: 192.168.178.0/24
 
 # Reverse Proxy
 gv_server_domain_name: update-your-hostname-created-via.duckdns.org

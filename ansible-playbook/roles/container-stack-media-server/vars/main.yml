@@ -29,9 +29,13 @@ qbittorrent_download_path: "{{ gv_media_data_root_local_mount_path }}/downloads"
 
 ## nordvpn
 add_vpn_container: "{{ gv_add_vpn_container }}"
-VPN_USERNAME: "{{ GV_VPN_USERNAME }}"
-VPN_PASSWORD: "{{ GV_VPN_PASSWORD }}"
-VPN_NETWORK_ALLOW_CIDR: "{{ GV_VPN_NETWORK_ALLOW_CIDR }}"
+
+### The type of vpn connection. options : openvpn, nordlynx
+vpn_type: nordlynx
+
+vpn_email: "{{ gv_vpn_email }}"
+vpn_password: "{{ gv_vpn_password }}"
+vpn_network_allow_cidr: "{{ gv_vpn_network_allow_cidr }}"
 vpn_container_name: vpn
 
 # sonarr

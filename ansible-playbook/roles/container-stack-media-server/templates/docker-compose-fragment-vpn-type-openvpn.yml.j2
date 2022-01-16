@@ -1,0 +1,37 @@
+vpn:
+  image: ghcr.io/bubuntux/nordvpn
+  container_name: {{ vpn_container_name }}
+  networks:
+    - media_server_network
+    - vpn_local
+  cap_add:
+    - NET_ADMIN
+  sysctls:
+    - net.ipv4.conf.all.rp_filter=2
+  devices:
+    - /dev/net/tun
+  environment:                # Review https://github.com/bubuntux/nordvpn#environment-variables
+    - USER=${VPN_USERNAME}
+    - "PASS=${VPN_PASSWORD}"
+    - CONNECT=Netherlands
+    - TECHNOLOGY=OpenVPN
+    - PROTOCOL=TCP
+    - OBFUSCATE=Enable
+    - NETWORK=${NETWORK}
+    - POST_CONNECT=iptables -A INPUT -p tcp --dport 9091 -j ACCEPT
+  ports:
+{% if transmission_enable == true %}
+    - 9092:9091
+{% endif %}
+{% if qbittorrent_enable == true %}
+    - 6881:6881
+    - 6881:6881/udp
+    - 8081:8080
+{% endif %}
+  healthcheck:
+    test: ["CMD-SHELL", "curl -s https://api.nordvpn.com/vpn/check/full | grep 'Protected' || exit 1"]
+    interval: 1m30s
+    timeout: 30s
+    retries: 5
+    start_period: 40s
+  restart: always
