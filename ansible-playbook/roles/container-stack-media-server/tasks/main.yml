@@ -58,6 +58,7 @@
         group: "{{ server_data_dir_group }}"
       loop:
         - "{{ transmission_download_path }}"
+        - "{{ transmission_config_path }}"
         - "{{ transmission_additional_config_path }}"
         - "{{ transmission_additional_config_path }}/scripts"
 
