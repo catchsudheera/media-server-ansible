@@ -8,6 +8,8 @@ server_data_dir_group: "{{ gv_local_media_group }}"
 server_data_dir_gid: "{{ gv_local_media_gid }}"
 
 add_vpn_container: "{{ gv_add_vpn_container }}"
+qbittorrent_enable: "{{ gv_qbittorrent_enable }}"
+transmission_enable: "{{ gv_transmission_enable }}"
 
 # Docker network setup
 docker_bridge_network_name: "{{ gv_docker_bridge_network_name }}"
