@@ -40,7 +40,7 @@ vpn_container_name: vpn
 
 # sonarr
 sonarr_config_path: "{{ container_data_root }}/sonarr/config"
-sonarr_library_path: "{{ gv_media_data_root_local_mount_path }}/data/movies"
+sonarr_library_path: "{{ gv_media_data_root_local_mount_path }}/data/tv"
 sonarr_download_path: "{{ gv_media_data_root_local_mount_path }}/downloads"
 
 # radarr
