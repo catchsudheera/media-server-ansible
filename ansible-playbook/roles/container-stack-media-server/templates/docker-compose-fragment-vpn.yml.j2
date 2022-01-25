@@ -44,9 +44,9 @@ qbittorrent:
     - {{ qbittorrent_download_path }}:/downloads
   healthcheck:
     test: ["CMD-SHELL", "( curl -s https://api.nordvpn.com/vpn/check/full | grep 'Protected' && curl -s -X GET -I  http://localhost:8080 | grep '200 OK' ) || exit 1"]
-    interval: 30s
-    timeout: 10s
-    retries: 3
+    interval: 2m
+    timeout: 30s
+    retries: 10
     start_period: 2m
   restart: always
   network_mode: service:vpn
