@@ -20,7 +20,7 @@
   block:
     - name: Installing dependecies for docker installation
       apt:
-        name: [ libffi-dev, libssl-dev, python3, python3-pip, sed ]
+        name: [ libffi-dev, libssl-dev, python3, python3-pip, sed, nfs-common ]
         update_cache: yes
 
     - name: Remove python-configparser package
