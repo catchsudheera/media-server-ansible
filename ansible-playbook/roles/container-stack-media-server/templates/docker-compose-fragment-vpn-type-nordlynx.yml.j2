@@ -14,7 +14,7 @@ vpn:
     - /dev/net/tun
   environment:
     - PRIVATE_KEY={{ nordlynx_private_key.stdout_lines[0] }}
-    - NET_LOCAL="{{ vpn_network_allow_cidr }}"
+    - NET_LOCAL={{ vpn_network_allow_cidr }}
     - POST_UP=iptables -A INPUT -p tcp --dport 9091 -j ACCEPT
   ports:
 {% if transmission_enable == true %}
