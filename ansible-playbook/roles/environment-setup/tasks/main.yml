@@ -67,7 +67,7 @@
 
     - name: Create server data LOCAL
       file:
-        path: "{{ server_data_local_path }}"
+        path: "{{ server_data_local_mount_path }}"
         state: directory
         owner: "{{ media_user_name }}"
         group: "{{ media_group_name }}"
