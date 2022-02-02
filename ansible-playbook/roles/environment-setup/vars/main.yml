@@ -11,27 +11,19 @@ docker_bridge_network_name: "{{ gv_docker_bridge_network_name }}"
 
 # Directory setup
 
-## Media data location type. Options : [local, nfs]
-
-### local : Directory created in the same server file system
-#media_data_location_type: local
-#media_data_local_path: /path/to/mediadata/dir
-
-### nfs : An a directory located in auto mounted NFS file system
-media_data_location_type: nfs
-media_data_nfs_server_address: "{{ gv_nfs_server_address }}"
-media_data_remote_dir_path: "{{ gv_media_data_remote_path }}"
+## Location type. Options : [local, nfs]
+media_data_location_type: "{{ gv_storage_location_type }}"
 media_data_local_mount_path: "{{ gv_media_data_root_local_mount_path }}"
 
-
 ## Server data location type. Options : [local, nfs]
+server_data_location_type: "{{ gv_storage_location_type }}"
+server_data_local_mount_path: "{{ gv_server_data_root_local_mount_path }}"
 
-### local : Directory created in the same server file system
-#server_data_location_type: local
-#server_data_local_path: /path/to/serverdata/dir
+### NFS config : A directory located in auto mounted NFS file system
 
-### nfs : An a directory located in auto mounted NFS file system
-server_data_location_type: nfs
+media_data_nfs_server_address: "{{ gv_nfs_server_address }}"
+media_data_remote_dir_path: "{{ gv_media_data_remote_path }}"
+
 server_data_nfs_server_address: "{{ gv_nfs_server_address }}"
 server_data_remote_dir_path: "{{ gv_server_data_remote_path }}"
-server_data_local_mount_path: "{{ gv_server_data_root_local_mount_path }}"
+
