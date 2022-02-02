@@ -86,7 +86,7 @@
 
     - name: Create media data LOCAL
       file:
-        path: "{{ media_data_local_path }}"
+        path: "{{ media_data_local_mount_path }}"
         state: directory
         owner: "{{ media_user_name }}"
         group: "{{ media_group_name }}"
