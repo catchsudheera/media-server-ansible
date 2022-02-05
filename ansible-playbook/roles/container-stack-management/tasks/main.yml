@@ -19,11 +19,20 @@
     dest: "{{ management_container_stack_location }}/docker-compose.yml"
     owner: "{{ server_data_dir_user }}"
     group: "{{ server_data_dir_group }}"
+  tags: version_1.1.0
 
 - name: Start Docker containers using docker-compose
   community.docker.docker_compose:
     project_src: "{{ management_container_stack_location }}"
   tags: start-stacks
+
+- name: Adding the Systemd units for docker-compose management
+  import_role:
+    name: docker-compose-systemd
+  vars:
+    docker_compose_dir_path: "{{ management_container_stack_location }}"
+    stack_name: container-stack-management
+  tags: version_1.1.0
 
 - name: Stop Docker containers if running
   block:

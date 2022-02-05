@@ -14,19 +14,6 @@ services:
       - AUTOHEAL_INTERVAL=30
       - CURL_TIMEOUT=30
       - AUTOHEAL_CONTAINER_LABEL=all
-  watchtower:
-    image: containrrr/watchtower
-    container_name: watchtower
-    networks:
-      - media_server_network
-    restart: always
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /etc/localtime:/etc/localtime:ro
-    environment:
-     - WATCHTOWER_INCLUDE_RESTARTING=true
-     - WATCHTOWER_SCHEDULE=00 58 9 * * *
-     - WATCHTOWER_CLEANUP=true
   portainer:
     image: portainer/portainer-ce
     container_name: portainer
