@@ -1,7 +1,7 @@
 # Media Server Setup
 
 <p align="center">
-  <img src="resources/SystemArch.svg">
+  <img src="resources/SystemArch.png">
 </p>
 
 <!--- Vector source : https://vectr.com/design/editor/6d3603f7-5742-49af-9653-58a888065fc3 --->
