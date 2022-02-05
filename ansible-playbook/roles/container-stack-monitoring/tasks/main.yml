@@ -1,4 +1,9 @@
 ---
+- name: Import config
+  include_vars:
+    dir: config
+  tags: always
+
 - name: Create stack root directory
   file:
     path: "{{ monitoring_container_stack_location }}"

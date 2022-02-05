@@ -1,0 +1,13 @@
+---
+
+# Torrent client
+gv_transmission_enable: true
+gv_qbittorrent_enable: false
+
+
+# VPN - only support nordvpn
+gv_add_vpn_container: false
+#gv_vpn_email: my-vpn-email@gmail.com
+#gv_vpn_password: my-vpn-password
+#gv_vpn_network_allow_cidr: 192.168.178.0/24
+

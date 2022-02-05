@@ -1,0 +1,16 @@
+---
+
+# Storage location type. Options : [local, nfs]
+gv_storage_location_type: local
+
+## LOCAL
+gv_media_data_root_local_mount_path: /mnt/media_share
+gv_server_data_root_local_mount_path: /mnt/server_data
+
+## NFS - uncomment and configure following for NFS.
+
+#gv_nfs_server_address: freenas.local
+#gv_media_data_root_local_mount_path: /mnt/media_share
+#gv_media_data_remote_path: /mnt/media-pool/dutchhome-media
+#gv_server_data_root_local_mount_path: /mnt/server_data
+#gv_server_data_remote_path: /mnt/NAS-root/dutchhome-server-data
