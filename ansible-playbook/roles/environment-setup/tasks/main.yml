@@ -1,8 +1,4 @@
 ---
-- name: Import config
-  include_vars:
-    dir: "{{ playbook_dir }}/config"
-  tags: always
 
 - name: Create User and Group
   block:

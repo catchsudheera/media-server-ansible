@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if ansible-playbook site.yml -i inventories/default/hosts.ini --tags stop-stacks  ; then
+if ansible-playbook site.yml -e nodes=localhost --connection=local --tags stop-stacks  ; then
     echo "  -- Stacks stopped"
 else
     echo ""

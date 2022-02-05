@@ -19,7 +19,7 @@ fi
 echo ""
 echo "--------------------------------------------------------------"
 echo " - Start upgrade"
-ansible-playbook site.yml -i inventories/default/hosts.ini --tags "version_$VERSION"
+ansible-playbook site.yml -e nodes=localhost --connection=local --tags "version_$VERSION"
 
 echo ""
 echo "--------------------------------------------------------------"

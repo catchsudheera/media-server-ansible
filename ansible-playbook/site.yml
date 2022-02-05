@@ -1,8 +1,9 @@
 ---
-- hosts: nodes
-  connection: local
+- hosts: "{{ nodes }}"
   gather_facts: yes
   become: yes
+  vars_files:
+    - "{{ playbook_dir }}/config/*.yml"
   roles:
     - role: environment-setup
     - role: container-stack-reverse-proxy
