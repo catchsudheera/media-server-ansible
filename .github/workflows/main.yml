@@ -1,0 +1,23 @@
+name: Ansible test run
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install ansible
+        run: apt -y install ansible && ansible-galaxy collection install community.docker
+        
+      - name: Run in test mode
+        run: ansible-playbook site.yml -e nodes=localhost --connection=local --check
+        
