@@ -3,7 +3,10 @@
   gather_facts: yes
   become: yes
   vars_files:
-    - "{{ playbook_dir }}/config/*.yml"
+    - "{{ playbook_dir }}/config/common-config.yml"
+    - "{{ playbook_dir }}/config/storage-config.yml"
+    - "{{ playbook_dir }}/config/media-stack-config.yml"
+    - "{{ playbook_dir }}/config/reverse-proxy-stack-config.yml"
   roles:
     - role: environment-setup
     - role: container-stack-reverse-proxy
