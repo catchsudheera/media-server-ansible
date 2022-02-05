@@ -1,4 +1,5 @@
 ---
+
 - name: Create stack root directory
   file:
     path: "{{ media_server_container_stack_location }}"

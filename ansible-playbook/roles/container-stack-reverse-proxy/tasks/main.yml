@@ -1,4 +1,5 @@
 ---
+
 - name: Create stack root directory
   file:
     path: "{{ reverse_proxy_container_stack_location }}"

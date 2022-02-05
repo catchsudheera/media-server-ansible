@@ -1,0 +1,16 @@
+---
+# Reverse Proxy
+gv_server_domain_name: my-hostname.duckdns.org
+gv_notification_email: myemail@gmail.com
+
+# Following has to set to false once initial testing is done.
+gv_use_lets_encrypt_staging_server: true
+
+# DNS : Get from here : https://www.duckdns.org/
+gv_duckdns_token: 69569af6-57bb-4bef-a13b-5bb2c4807502
+
+# Dashboard
+gv_authelia_enable: true
+gv_dashboard_username: my-username
+gv_dashboard_password: my-password
+gv_dashboard_user_email: myemail@gmail.com

@@ -11,5 +11,5 @@ fi
 echo ""
 echo "--------------------------------------------------------------"
 echo " - Start installation"
-ansible-playbook site.yml -i inventories/default/hosts.ini
+ansible-playbook site.yml -e nodes=localhost --connection=local
 

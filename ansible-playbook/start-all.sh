@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if ansible-playbook site.yml -i inventories/default/hosts.ini --tags start-stacks  ; then
+if ansible-playbook site.yml -e nodes=localhost --connection=local --tags start-stacks  ; then
     echo "  -- Stacks started"
 else
     echo ""

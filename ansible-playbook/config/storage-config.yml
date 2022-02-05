@@ -1,0 +1,16 @@
+---
+
+# Storage location type. Options : [local, nfs]
+gv_storage_location_type: local
+
+## LOCAL
+gv_media_data_local_path: /media/media_data
+gv_configuration_data_local_path: /etc/media_server_configuration
+
+## NFS - uncomment and configure following for NFS.
+
+#gv_nfs_server_address: freenas.local
+#gv_media_data_local_path: /mnt/media_share
+#gv_media_data_remote_path: /mnt/nas/media
+#gv_configuration_data_local_path: /mnt/media_server_configuration
+#gv_server_data_remote_path: /mnt/nas/configuration-data

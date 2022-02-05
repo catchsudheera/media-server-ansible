@@ -1,0 +1,17 @@
+---
+# GLOBAL : Use the value from "TZ Database name" column from here : https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
+gv_server_timezone: Europe/Amsterdam
+
+# Docker
+gv_docker_bridge_network_name: media-server-network
+
+# USER
+gv_local_media_user: media-user
+gv_local_media_uid: 1003
+gv_local_media_group: media-group
+gv_local_media_gid: 1002
+gv_local_media_user_home: "/home/{{ gv_local_media_user }}"
+
+# COMMON
+gv_container_data_dir_name: container_data
+gv_container_data_root: "{{ gv_configuration_data_local_path }}/{{ gv_container_data_dir_name | default('container_data') }}"
