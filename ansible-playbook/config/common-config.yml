@@ -6,7 +6,6 @@ gv_server_timezone: Europe/Amsterdam
 gv_docker_bridge_network_name: media-server-network
 
 # USER
-ansible_user: pi
 gv_local_media_user: media-user
 gv_local_media_uid: 1003
 gv_local_media_group: media-group
