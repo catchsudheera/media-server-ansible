@@ -1,0 +1,10 @@
+[Unit]
+Description=Refresh images and update containers for {{ docker_compose_dir_path }}
+Requires={{ docker_compose_service_unit_file_name }}
+After={{ docker_compose_service_unit_file_name }}
+
+[Timer]
+OnCalendar=hourly
+
+[Install]
+WantedBy=timers.target

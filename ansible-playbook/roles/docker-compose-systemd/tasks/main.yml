@@ -1,0 +1,43 @@
+---
+- name: Define unit files names
+  set_fact:
+    docker_compose_service_unit_file_name: "{{ stack_name }}.service"
+    docker_compose_reload_service_unit_file_name: "{{ stack_name }}-reload.service"
+    docker_compose_reload_timer_unit_file_name: "{{ stack_name }}-reload.timer"
+
+- name: Install docker compose.service unit file
+  template:
+    src: docker-compose.service.j2
+    dest: "/etc/systemd/system/{{ docker_compose_service_unit_file_name }}"
+
+- name: Install docker compose-reload.service unit file
+  template:
+    src: docker-compose-reload.service.j2
+    dest: "/etc/systemd/system/{{ docker_compose_reload_service_unit_file_name }}"
+
+- name: Install docker compose-reload.timer unit file
+  template:
+    src: docker-compose-reload.timer.j2
+    dest: "/etc/systemd/system/{{ docker_compose_reload_timer_unit_file_name }}"
+
+- name: docker compose.service unit file enable and start
+  systemd:
+    name: "{{ docker_compose_service_unit_file_name }}"
+    enabled: yes
+    state: restarted
+    daemon_reload: yes
+
+- name: docker docker compose-reload.service unit file enable and start
+  systemd:
+    name: "{{ docker_compose_reload_service_unit_file_name }}"
+    enabled: yes
+    state: restarted
+    daemon_reload: yes
+
+- name: docker docker compose-reload.timer file enable and start
+  systemd:
+    name: "{{ docker_compose_reload_timer_unit_file_name }}"
+    enabled: yes
+    state: restarted
+    daemon_reload: yes
+
