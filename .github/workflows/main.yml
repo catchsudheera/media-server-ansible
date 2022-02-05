@@ -19,5 +19,5 @@ jobs:
         run: apt -y install ansible && ansible-galaxy collection install community.docker
         
       - name: Run in test mode
-        run: ansible-playbook site.yml -e nodes=localhost --connection=local --check
+        run: ansible-playbook ansible-playbook/site.yml -e nodes=localhost --connection=local --check
         
