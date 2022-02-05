@@ -16,7 +16,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Install ansible
-        run: apt -y install ansible && ansible-galaxy collection install community.docker
+        run: sudo apt update && sudo apt -y install ansible && ansible-galaxy collection install community.docker
         
       - name: Run in test mode
         run: ansible-playbook ansible-playbook/site.yml -e nodes=localhost --connection=local --check
