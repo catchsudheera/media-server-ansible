@@ -1,0 +1,20 @@
+[Unit]
+Description=Docker Compose container starter for {{ docker_compose_dir_path }}
+After=docker.service network-online.target
+Requires=docker.service network-online.target
+
+[Service]
+WorkingDirectory={{ docker_compose_dir_path }}
+Type=oneshot
+RemainAfterExit=yes
+
+ExecStartPre=/usr/local/bin/docker-compose pull --ignore-pull-failures --include-deps
+ExecStart=/usr/local/bin/docker-compose up -d --always-recreate-deps
+
+ExecStop=/usr/local/bin/docker-compose down --remove-orphans --timeout 100
+
+ExecReload=/usr/local/bin/docker-compose pull --ignore-pull-failures --include-deps
+ExecReload=/usr/local/bin/docker-compose up -d --always-recreate-deps
+
+[Install]
+WantedBy=multi-user.target

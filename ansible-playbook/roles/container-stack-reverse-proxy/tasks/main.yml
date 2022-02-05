@@ -157,6 +157,14 @@
     project_src: "{{ reverse_proxy_container_stack_location }}"
     restarted: yes
 
+- name: Adding the Systemd units for docker-compose management
+  import_role:
+    name: docker-compose-systemd
+  vars:
+    docker_compose_dir_path: "{{ reverse_proxy_container_stack_location }}"
+    stack_name: container-stack-reverse-proxy
+  tags: version_1.1.0
+
 - name: Stop Docker containers if running
   block:
     - name: Check wether the docker file exist
