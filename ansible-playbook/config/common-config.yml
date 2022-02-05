@@ -14,4 +14,4 @@ gv_local_media_user_home: "/home/{{ gv_local_media_user }}"
 
 # COMMON
 gv_container_data_dir_name: container_data
-gv_container_data_root: "{{ gv_server_data_root_local_mount_path }}/{{ gv_container_data_dir_name | default('container_data') }}"
+gv_container_data_root: "{{ gv_configuration_data_local_path }}/{{ gv_container_data_dir_name | default('container_data') }}"

@@ -13,11 +13,11 @@ docker_bridge_network_name: "{{ gv_docker_bridge_network_name }}"
 
 ## Location type. Options : [local, nfs]
 media_data_location_type: "{{ gv_storage_location_type }}"
-media_data_local_mount_path: "{{ gv_media_data_root_local_mount_path }}"
+media_data_local_mount_path: "{{ gv_media_data_local_path }}"
 
 ## Server data location type. Options : [local, nfs]
 server_data_location_type: "{{ gv_storage_location_type }}"
-server_data_local_mount_path: "{{ gv_server_data_root_local_mount_path }}"
+server_data_local_mount_path: "{{ gv_configuration_data_local_path }}"
 
 ### NFS config : A directory located in auto mounted NFS file system
 
