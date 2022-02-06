@@ -1,5 +1,5 @@
 ---
-- hosts: "{{ nodes }}"
+- hosts: all
   gather_facts: yes
   become: yes
   vars_files:
