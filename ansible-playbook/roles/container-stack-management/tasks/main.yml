@@ -19,7 +19,7 @@
     dest: "{{ management_container_stack_location }}/docker-compose.yml"
     owner: "{{ server_data_dir_user }}"
     group: "{{ server_data_dir_group }}"
-  tags: version_1.1.0
+  tags: version_1.0.1
 
 - name: Start Docker containers using docker-compose
   community.docker.docker_compose:
@@ -32,7 +32,7 @@
   vars:
     docker_compose_dir_path: "{{ management_container_stack_location }}"
     stack_name: container-stack-management
-  tags: version_1.1.0
+  tags: version_1.0.1
 
 - name: Stop Docker containers if running
   block:

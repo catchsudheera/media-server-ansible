@@ -31,7 +31,7 @@
   vars:
     docker_compose_dir_path: "{{ monitoring_container_stack_location }}"
     stack_name: container-stack-monitoring
-  tags: version_1.1.0
+  tags: version_1.0.1
 
 - name: Stop Docker containers if running
   block:
