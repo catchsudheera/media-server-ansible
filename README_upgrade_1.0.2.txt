@@ -5,7 +5,7 @@ On the raspberry pi
 
 On your Laptop/PC
 
-	1. Download the patch release : https://github.com/catchsudheera/media-server-ansible/archive/refs/tags/1.0.1.zip
+	1. Download the patch release : https://github.com/catchsudheera/media-server-ansible/archive/refs/tags/1.0.2.zip
 	2. Make sure content of following files are correct. (Use previously used files) : 
 			ansible-playbook/inventories/default/group_vars/all.yml
 			ansible-playbook/inventories/default/hosts.ini
