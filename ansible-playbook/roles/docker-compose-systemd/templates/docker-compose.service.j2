@@ -9,12 +9,12 @@ Type=oneshot
 RemainAfterExit=yes
 
 ExecStartPre=/usr/local/bin/docker-compose pull --ignore-pull-failures --include-deps
-ExecStart=/usr/local/bin/docker-compose up -d --always-recreate-deps
+ExecStart=/usr/local/bin/docker-compose up -d --always-recreate-deps || ( /usr/local/bin/docker-compose down && /usr/local/bin/docker-compose up -d --always-recreate-deps )
 
 ExecStop=/usr/local/bin/docker-compose down --remove-orphans --timeout 100
 
 ExecReload=/usr/local/bin/docker-compose pull --ignore-pull-failures --include-deps
-ExecReload=/usr/local/bin/docker-compose up -d --always-recreate-deps
+ExecReload=/usr/local/bin/docker-compose up -d --always-recreate-deps || ( /usr/local/bin/docker-compose down && /usr/local/bin/docker-compose up -d --always-recreate-deps )
 
 [Install]
 WantedBy=multi-user.target
