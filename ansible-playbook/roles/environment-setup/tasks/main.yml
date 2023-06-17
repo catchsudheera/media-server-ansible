@@ -46,9 +46,12 @@
          append: yes
 
     - name: Install docker-compose
-      shell: pip3 -v install docker-compose
+      shell: curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
       args:
         creates: /usr/local/bin/docker-compose
+
+    - name: Change permission docker-compose
+      shell: chmod +x /usr/local/bin/docker-compose
 
 - name: Add docker network for application containers to use
   shell: "docker network inspect {{ docker_bridge_network_name }} || docker network create {{ docker_bridge_network_name }}"
