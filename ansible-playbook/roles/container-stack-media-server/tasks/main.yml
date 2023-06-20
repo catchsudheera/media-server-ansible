@@ -29,7 +29,7 @@
         name: wireguard
     - name: Generate the private key
       script:
-        cmd: "vpn-nordlynx-private-key-generate.sh {{ vpn_email }} {{ vpn_password }}"
+        cmd: "vpn-nordlynx-private-key-generate.sh {{ vpn_token }}"
       register: nordlynx_private_key
   when: add_vpn_container|bool == true and vpn_type == 'nordlynx'
 

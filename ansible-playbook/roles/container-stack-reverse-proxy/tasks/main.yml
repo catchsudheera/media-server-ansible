@@ -96,9 +96,9 @@
     path: "{{ swag_config_path }}/nginx/proxy-confs/{{ item.name }}.{{ item.type }}.conf.sample"
   with_list: "{{ reverse_proxy_app_list | selectattr('proxy_conf_enable', '==', true) | list}}"
 
-- name: Wait until Swag container up and create default config
-  wait_for:
-    path: "{{ swag_config_path }}/nginx/site-confs/default"
+# - name: Wait until Swag container up and create default config
+#   wait_for:
+#     path: "{{ swag_config_path }}/nginx/site-confs/default"
 
 - name: Adding subdomain reverse proxy configuration
   copy:

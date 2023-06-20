@@ -10,8 +10,6 @@ vpn:
     - net.ipv4.conf.all.rp_filter=2
     - net.ipv6.conf.all.disable_ipv6=1
     - net.ipv4.conf.all.src_valid_mark=1
-  devices:
-    - /dev/net/tun
   environment:
     - PRIVATE_KEY={{ nordlynx_private_key.stdout_lines[0] }}
     - NET_LOCAL={{ vpn_network_allow_cidr }}

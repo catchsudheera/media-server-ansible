@@ -8,11 +8,8 @@ vpn:
     - NET_ADMIN
   sysctls:
     - net.ipv4.conf.all.rp_filter=2
-  devices:
-    - /dev/net/tun
   environment:                # Review https://github.com/bubuntux/nordvpn#environment-variables
-    - USER=${VPN_USERNAME}
-    - "PASS=${VPN_PASSWORD}"
+    - TOKEN=${TOKEN}
     - CONNECT=Netherlands
     - TECHNOLOGY=OpenVPN
     - PROTOCOL=TCP

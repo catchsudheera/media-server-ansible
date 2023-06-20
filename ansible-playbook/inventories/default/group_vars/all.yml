@@ -38,8 +38,7 @@ gv_qbittorrent_enable: false
 
 # VPN - only supports nordvpn
 gv_add_vpn_container: false
-#gv_vpn_email: my-vpn-email@gmail.com
-#gv_vpn_password: my-vpn-password
+#gv_vpn_token: <create-your-token-from-nordvpn-website>
 #gv_vpn_network_allow_cidr: 192.168.178.0/24
 
 # Reverse Proxy
