@@ -6,58 +6,76 @@
     owner: "{{ mount_dir_user }}"
     group: "{{ mount_dir_group }}"
 
-- name: Get escaped name for the mount unit file
-  command: 'systemd-escape --path "{{ local_mount_path }}"'
-  register: escaped_mount_path
+- name: Install AutoFS
+  apt:
+    name: autofs
+    update_cache: yes
 
-- name: Install NFS mount systemd unit file
-  template:
-    src: mount_unit.mount.j2
-    #noinspection UndefinedVariable
-    dest: /etc/systemd/system/{{ escaped_mount_path.stdout }}.mount
 
-- name: Install NFS automount systemd unit file
-  template:
-    src: automount_unit.automount.j2
-    #noinspection UndefinedVariable
-    dest: /etc/systemd/system/{{ escaped_mount_path.stdout }}.automount
+- name: Check whether the nfs file is referenced
+  lineinfile:
+    state: absent
+    path: /etc/auto.master
+    regexp: "^/-   /etc/auto.nfs$"
+  check_mode: true
+  changed_when: false
+  register: nfs_config_file_referenced
 
-- name: Mount unit disable and stop
-  systemd:
-    #noinspection UndefinedVariable
-    name: '{{ escaped_mount_path.stdout }}.mount'
-    enabled: no
+- name: Add nfs file is reference
+  lineinfile:
+    dest: /etc/auto.master
+    line: "/-   /etc/auto.nfs"
+  when: nfs_config_file_referenced.found == 0
 
-- name: Automount unit enable and start
-  systemd:
-    #noinspection UndefinedVariable
-    name: '{{ escaped_mount_path.stdout }}.automount'
-    enabled: yes
+- name: Ensure NFS file exists
+  copy:
+    content: ""
+    dest: /etc/auto.nfs
+    force: false
+
+- name: Check mount line exist in the nfs file
+  lineinfile:
+    state: absent
+    path: /etc/auto.nfs
+    regexp: "^{{ local_mount_path }} -fstype=nfs,rw {{ nfs_server_address }}:{{ remote_dir_path }}$"
+  check_mode: true
+  changed_when: false
+  register: nfs_mount_added
+
+- name: Add nfs mount
+  lineinfile:
+    dest: /etc/auto.nfs
+    line: "{{ local_mount_path }} -fstype=nfs,rw {{ nfs_server_address }}:{{ remote_dir_path }}"
+  when: nfs_mount_added.found == 0
+
+- name: Restart autofs to pickup config change
+  ansible.builtin.systemd:
     state: restarted
-    daemon_reload: yes
+    daemon_reload: true
+    name: autofs
 
 - name: Check whether docker unit file exist
   stat:
     path: "/lib/systemd/system/docker.service"
   register: docker_service_file
 
-- name: Check whether automount condition already defined
+- name: Check whether autofs condition already defined
   lineinfile:
     state: absent
     path: "/lib/systemd/system/docker.service"
     #noinspection UndefinedVariable
-    regexp: "^After=.*{{ escaped_mount_path.stdout }}.automount.*$"
+    regexp: "^After=.*autofs.service.*$"
   check_mode: true
   changed_when: false
   register: automount_condition_defined
 
-- name: Adding docker service to start after automount
+- name: Adding docker service to start after autofs
   lineinfile:
     path: "/lib/systemd/system/docker.service"
     backrefs: yes
     regexp: "^(After=.*)$"
     #noinspection UndefinedVariable
-    line: '\1 {{ escaped_mount_path.stdout }}.automount'
+    line: '\1 autofs.service'
   when: docker_service_file.stat.exists and automount_condition_defined.found == 0
 
 - name: Sleep for 30 seconds to allow mount to complete
