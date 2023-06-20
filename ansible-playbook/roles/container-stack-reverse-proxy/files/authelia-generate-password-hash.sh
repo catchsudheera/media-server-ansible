@@ -1,3 +1,4 @@
 #!/bin/bash
 
-docker run --rm authelia/authelia:latest authelia hash-password "$1" 2>/dev/null | grep "Password hash: " | sed 's/Password hash: //'
+# pinning the version to 4.37 , so that the output of the hash-password is consistent
+docker run --rm authelia/authelia:4.37 authelia hash-password "$1" 2>/dev/null | grep "Digest: " | sed 's/Digest: //'

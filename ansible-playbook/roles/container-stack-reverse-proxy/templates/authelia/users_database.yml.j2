@@ -1,6 +1,6 @@
 users:
-  {{ authelia_user_username}}:
+  {{ authelia_user_username }}:
     displayname: "Dashboard User"
     password: "{{ authelia_user_password_hash.stdout_lines[0] }}"
-    email: {{ authelia_user_email}}
+    email: {{ authelia_user_email }}
     groups: []
