@@ -35,6 +35,9 @@ vpn_type: nordlynx
 
 vpn_token: "{{ gv_vpn_token }}"
 vpn_network_allow_cidr: "{{ gv_vpn_network_allow_cidr }}"
+vpn_server_end_point: "{{ gv_vpn_server_end_point }}"
+vpn_server_public_key: "{{ gv_vpn_server_public_key }}"
+vpn_nordvpn_query: "{{ gv_vpn_nordvpn_query }}"
 vpn_container_name: vpn
 
 # sonarr

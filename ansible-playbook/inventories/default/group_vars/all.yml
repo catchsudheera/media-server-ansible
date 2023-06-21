@@ -41,6 +41,11 @@ gv_add_vpn_container: false
 #gv_vpn_token: <create-your-token-from-nordvpn-website>
 #gv_vpn_network_allow_cidr: 192.168.178.0/24
 
+## Following are optional VPN config. Read : https://github.com/bubuntux/nordlynx/tree/main#environment and https://sleeplessbeastie.eu/2019/02/18/how-to-use-public-nordvpn-api/
+#gv_vpn_nordvpn_query: filters\[country_id\]=153
+#gv_vpn_server_end_point: nl2.napps-6.com:51820
+#gv_vpn_server_public_key: 4cd/R76wKhWUUaKzCgn7TcjEgaFbiHyZVOI4JzoPDyc=
+
 # Reverse Proxy
 gv_server_domain_name: my-hostname.duckdns.org
 gv_notification_email: myemail@gmail.com
