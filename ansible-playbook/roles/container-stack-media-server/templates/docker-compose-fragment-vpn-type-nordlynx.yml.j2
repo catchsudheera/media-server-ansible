@@ -34,7 +34,7 @@ vpn:
     - 8081:8080
 {% endif %}
   healthcheck:
-    test: ["CMD-SHELL", "curl -s https://api.nordvpn.com/vpn/check/full | grep 'Protected' || exit 1"]
+    test: ["CMD-SHELL", "curl -s https://api.nordvpn.com/vpn/check/full | grep 'Protected' || curl -s https://nordvpn.com/wp-admin/admin-ajax.php?action=get_user_info_data | jq -r '.status' | grep 'true' || exit 1"]
     interval: 1m30s
     timeout: 30s
     retries: 5
