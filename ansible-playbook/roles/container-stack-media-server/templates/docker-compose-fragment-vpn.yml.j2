@@ -19,9 +19,9 @@ transmission:
     - {{ transmission_download_path }}:/downloads
     - {{ transmission_additional_config_path }}/scripts:/scripts
   healthcheck:
-    test: ["CMD-SHELL", "( curl -s https://api.nordvpn.com/vpn/check/full | grep 'Protected' && curl -s -X GET -I http://localhost:9091/transmission/web/ | grep '200 OK' ) || exit 1"]
+    test: ["CMD-SHELL", "((curl -s https://api.nordvpn.com/vpn/check/full | grep 'Protected' || curl -s https://nordvpn.com/wp-admin/admin-ajax.php?action=get_user_info_data | jq -r '.status' | grep 'true') && curl -s -X GET -I http://localhost:9091/transmission/web/ | grep '200 OK' ) || exit 1"]
     interval: 2m
-    timeout: 30s
+    timeout: 1m
     retries: 10
     start_period: 2m
   restart: always
