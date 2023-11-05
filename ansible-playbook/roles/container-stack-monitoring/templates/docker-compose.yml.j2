@@ -15,6 +15,17 @@ services:
       - 3001:3001
     restart: always
 
+  dozzle:
+    image: amir20/dozzle:latest
+    container_name: dozzle
+    networks:
+      - media_server_network
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 9999:8080
+    restart: always
+
 networks:
   media_server_network:
     external:
