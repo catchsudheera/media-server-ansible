@@ -119,3 +119,11 @@ cd ansible-playbook
 cd ansible-playbook
 ./stop-all.sh
 ```
+
+## Manual operations
+
+### Find and delete downloaded files 16 days ago
+
+```shell script
+find .  -mtime +16 -exec rm -rf {} \;
+```
