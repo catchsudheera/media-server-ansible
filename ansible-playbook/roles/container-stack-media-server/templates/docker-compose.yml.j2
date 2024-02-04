@@ -13,7 +13,7 @@ services:
     volumes:
       - {{ sonarr_config_path_local }}:/config
       - {{ sonarr_library_path }}:/tv
-      - {{ sonarr_download_path }}:/downloads
+      - {{ sonarr_download_path }}:/downloads/tv
     ports:
       - 8989:8989
     healthcheck:
@@ -35,7 +35,7 @@ services:
     volumes:
       - {{ radarr_config_path_local }}:/config
       - {{ radarr_library_path }}:/movies
-      - {{ radarr_download_path }}:/downloads
+      - {{ radarr_download_path }}:/downloads/movies
     ports:
      - 7878:7878
     healthcheck:
