@@ -41,12 +41,14 @@ vpn_nordvpn_query: "{{ gv_vpn_nordvpn_query }}"
 vpn_container_name: vpn
 
 # sonarr
-sonarr_config_path: "{{ container_data_root }}/sonarr/config"
+sonarr_config_path_local: "{{ media_server_container_stack_location }}/additional-config/sonarr"
+sonarr_config_path_nfs: "{{ container_data_root }}/sonarr/config"
 sonarr_library_path: "{{ gv_media_data_root_local_mount_path }}/data/tv"
 sonarr_download_path: "{{ gv_media_data_root_local_mount_path }}/downloads/tv"
 
 # radarr
-radarr_config_path: "{{ container_data_root }}/radarr/config"
+radarr_config_path_local: "{{ media_server_container_stack_location }}/additional-config/radarr"
+radarr_config_path_nfs: "{{ container_data_root }}/radarr/config"
 radarr_library_path: "{{ gv_media_data_root_local_mount_path }}/data/movies"
 radarr_download_path: "{{ gv_media_data_root_local_mount_path }}/downloads/movies"
 

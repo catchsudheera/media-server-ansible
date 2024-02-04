@@ -85,10 +85,12 @@
     owner: "{{ server_data_dir_user }}"
     group: "{{ server_data_dir_group }}"
   loop:
-    - "{{ sonarr_config_path }}"
+    - "{{ sonarr_config_path_local }}"
+    - "{{ sonarr_config_path_nfs }}"
     - "{{ sonarr_library_path }}"
     - "{{ sonarr_download_path }}"
-    - "{{ radarr_config_path }}"
+    - "{{ radarr_config_path_local }}"
+    - "{{ radarr_config_path_nfs }}"
     - "{{ radarr_library_path }}"
     - "{{ radarr_download_path }}"
     - "{{ jackett_config_path }}"
@@ -105,13 +107,45 @@
     src: "{{ item.name }}-config.xml.j2"
     dest: "{{ item.configPath }}/config.xml"
   loop:
-    - { name: 'sonarr', configPath: "{{ sonarr_config_path }}" }
-    - { name: 'radarr', configPath: "{{ radarr_config_path }}" }
+    - { name: 'sonarr', configPath: "{{ sonarr_config_path_local }}" }
+    - { name: 'radarr', configPath: "{{ radarr_config_path_local }}" }
 
 - name: Copy Jackett config file
   template:
     src: jackett-config.json.j2
     dest: "{{ jackett_config_path }}/Jackett/ServerConfig.json"
+
+#    Reason for the following step is to workaround the SQLite WAL file locking issue with NFS mounts
+#    We effectively use a local dir to drive the config and periodically copies it to NFS mount
+- name: Initial Copy of the Sonarr config from NFS to local
+  copy:
+    src: "{{ sonarr_config_path_nfs }}/"
+    dest: "{{ sonarr_config_path_local }}/"
+    remote_src: true
+    owner: "{{ server_data_dir_user }}"
+    group: "{{ server_data_dir_group }}"
+
+- name: Initial Copy of the Radarr config from NFS to local
+  copy:
+    src: "{{ radarr_config_path_nfs }}/"
+    dest: "{{ radarr_config_path_local }}/"
+    remote_src: true
+    owner: "{{ server_data_dir_user }}"
+    group: "{{ server_data_dir_group }}"
+
+- name: Setup rsync tasks for Sonarr config backup
+  ansible.builtin.cron:
+    name: "Sonarr config backup"
+    special_time: "hourly"
+    job: "rsync -a -W --delete {{ sonarr_config_path_local }}/ {{ sonarr_config_path_nfs }}/"
+    user: "{{ server_data_dir_user }}"
+
+- name: Setup rsync tasks for Radarr config backup
+  ansible.builtin.cron:
+    name: "Radarr config backup"
+    special_time: "hourly"
+    job: "rsync -a -W --delete {{ radarr_config_path_local }}/ {{ radarr_config_path_nfs }}/"
+    user: "{{ server_data_dir_user }}"
 
 - name: Start Docker containers using docker-compose
   community.docker.docker_compose:

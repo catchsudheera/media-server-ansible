@@ -11,7 +11,7 @@ services:
       - PGID={{ server_data_group_gid }}
       - TZ={{ server_timezone}}
     volumes:
-      - {{ sonarr_config_path }}:/config
+      - {{ sonarr_config_path_local }}:/config
       - {{ sonarr_library_path }}:/tv
       - {{ sonarr_download_path }}:/downloads
     ports:
@@ -33,7 +33,7 @@ services:
       - PGID={{ server_data_group_gid }}
       - TZ={{ server_timezone}}
     volumes:
-      - {{ radarr_config_path }}:/config
+      - {{ radarr_config_path_local }}:/config
       - {{ radarr_library_path }}:/movies
       - {{ radarr_download_path }}:/downloads
     ports:
