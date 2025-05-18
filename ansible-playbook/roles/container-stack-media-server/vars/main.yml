@@ -56,3 +56,8 @@ radarr_download_path: "{{ gv_media_data_root_local_mount_path }}/downloads/movie
 jackett_config_path: "{{ container_data_root }}/jackett/config"
 jackett_torrent_file_path: "{{ container_data_root }}/jackett/torrent_files"
 
+
+#overseerr
+overseerr_config_path: "{{ container_data_root }}/overseerr/config"
+
+
