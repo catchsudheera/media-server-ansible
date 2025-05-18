@@ -48,10 +48,7 @@ ansible-galaxy collection install community.docker
 
 Google it if you have no idea what this is.
 
-#5. Register a free DuckDNS for free hostname
- - Visit https://www.duckdns.org/ and register a free account there.
- - Note down the `token` for the created account. Use it as the `gv_duckdns_token` variable in `ansible-playbook/inventories/default/group_vars/all.yml` 
- - Add a new domain name there and note down it. Use it as the `gv_server_domain_name` variable in `ansible-playbook/inventories/default/group_vars/all.yml` 
+#5 <TBA>
  
 #6. Configure ansible playbook
 

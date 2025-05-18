@@ -1,0 +1,28 @@
+---
+server_timezone: "{{ gv_server_timezone }}"
+
+# User
+server_data_dir_user: "{{ gv_local_media_user }}"
+server_data_dir_group: "{{ gv_local_media_group }}"
+server_data_user_uid: "{{ gv_local_media_uid }}"
+server_data_group_gid: "{{ gv_local_media_gid }}"
+
+# Container stack
+container_data_root: "{{ gv_container_data_root }}"
+reverse_proxy_v2_stack_location: "{{ gv_local_media_user_home }}/.container-stack-reverse-proxy-v2"
+
+docker_network_name: "{{ gv_docker_network_name }}"
+
+# Nginx Proxy manager
+nginx_proxy_manager_config_path: "{{ container_data_root }}/nginx_proxy_manager/config"
+nginx_proxy_manager_database_path: "{{ container_data_root }}/nginx_proxy_manager/database"
+nginx_proxy_manager_lets_encrypt_path: "{{ container_data_root }}/nginx_proxy_manager/lets_encrypt"
+
+database_username: "{{ gv_database_username }}"
+database_password: "{{ gv_database_password }}"
+
+
+# homepage
+homepage_proxy_manager_config_path: "{{ container_data_root }}/homepage/config"
+
+
