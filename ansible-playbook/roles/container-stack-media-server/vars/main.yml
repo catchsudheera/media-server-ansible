@@ -57,7 +57,7 @@ jackett_config_path: "{{ container_data_root }}/jackett/config"
 jackett_torrent_file_path: "{{ container_data_root }}/jackett/torrent_files"
 
 
-#overseerr
-overseerr_config_path: "{{ container_data_root }}/overseerr/config"
+# jellyseer
+jellyseerr_config_path: "{{ container_data_root }}/overseerr/config"
 
 
