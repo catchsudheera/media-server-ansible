@@ -42,7 +42,7 @@ services:
     image: ghcr.io/gethomepage/homepage:latest
     container_name: homepage
     environment:
-      - HOMEPAGE_ALLOWED_HOSTS: gethomepage.dev # required, may need port. See gethomepage.dev/installation/#homepage_allowed_hosts. For this installation it does not matter as traffic always comes through localhost
+      - HOMEPAGE_ALLOWED_HOSTS=gethomepage.dev
       - PUID={{ server_data_user_uid }}
       - PGID={{ server_data_group_gid }}
     ports:
