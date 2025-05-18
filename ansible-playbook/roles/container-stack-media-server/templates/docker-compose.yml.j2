@@ -5,7 +5,7 @@ services:
     image: sctx/overseerr:latest
     container_name: overseerr
     environment:
-      - TZ={{ server_timezone}}
+      - TZ={{ server_timezone }}
       - PORT=5055
     ports:
       - 5055:5055
@@ -20,7 +20,7 @@ services:
     environment:
       - PUID={{ server_data_user_uid }}
       - PGID={{ server_data_group_gid }}
-      - TZ={{ server_timezone}}
+      - TZ={{ server_timezone }}
     volumes:
       - {{ sonarr_config_path_local }}:/config
       - {{ sonarr_library_path }}:/tv
