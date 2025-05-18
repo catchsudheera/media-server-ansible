@@ -1,5 +1,5 @@
 services:
-  app:
+  npm:
     container_name: npm
     image: 'jc21/nginx-proxy-manager:latest'
     restart: unless-stopped
@@ -21,7 +21,9 @@ services:
       - {{ nginx_proxy_manager_lets_encrypt_path }}:/etc/letsencrypt
     depends_on:
       - npm_db
-  npm_db
+    networks:
+      - media_server_network
+  npm_db:
     container_name: postgres
     image: postgres:latest
     restart: unless-stopped
@@ -34,6 +36,8 @@ services:
       - POSTGRES_DB=npm
     volumes:
       - {{ nginx_proxy_manager_database_path }}:/var/lib/postgresql/data
+    networks:
+      - media_server_network
   homepage:
     image: ghcr.io/gethomepage/homepage:latest
     container_name: homepage
@@ -47,3 +51,10 @@ services:
       - {{ homepage_proxy_manager_config_path }}:/app/config
       - /var/run/docker.sock:/var/run/docker.sock:ro
     restart: unless-stopped
+    networks:
+      - media_server_network
+
+networks:
+  media_server_network:
+    external:
+      name: {{ docker_bridge_network_name }}
