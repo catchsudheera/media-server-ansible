@@ -8,7 +8,7 @@ services:
       - '443:443'
       - '81:81'
     environment:
-      - DB_POSTGRES_HOST=db
+      - DB_POSTGRES_HOST=npm_db
       - DB_POSTGRES_PORT=5432
       - DB_POSTGRES_USER={{ database_username }}
       - DB_POSTGRES_PASSWORD={{ database_password }}
