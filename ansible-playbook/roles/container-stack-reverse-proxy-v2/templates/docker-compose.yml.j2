@@ -30,12 +30,13 @@ services:
     environment:
       - PUID={{ server_data_user_uid }}
       - PGID={{ server_data_group_gid }}
+      - USER={{ server_data_user_uid }}:{{ server_data_group_gid }}
       - TZ={{ server_timezone }}
       - POSTGRES_USER={{ database_username }}
       - POSTGRES_PASSWORD={{ database_password }}
       - POSTGRES_DB=npm
     volumes:
-      - {{ nginx_proxy_manager_database_path }}:/var/lib/postgresql/data
+      - {{ nginx_proxy_manager_database_path_local }}:/var/lib/postgresql/data
     networks:
       - media_server_network
   homepage:
