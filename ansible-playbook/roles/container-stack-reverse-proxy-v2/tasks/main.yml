@@ -53,10 +53,32 @@
 
 - name: Create homepage data directories
   file:
-    path: "{{ homepage_proxy_manager_config_path }}"
+    path: "{{ homepage_config_path }}"
     state: directory
     owner: "{{ server_data_dir_user }}"
     group: "{{ server_data_dir_group }}"
+
+- name: Create homepage data directories - local
+  file:
+    path: "{{ homepage_config_path_local }}"
+    state: directory
+    owner: "{{ server_data_dir_user }}"
+    group: "{{ server_data_dir_group }}"
+
+- name: Initial Copy of the homepage data from NFS to local
+  copy:
+    src: "{{ homepage_config_path }}/"
+    dest: "{{ homepage_config_path_local }}/"
+    remote_src: true
+    owner: "{{ server_data_dir_user }}"
+    group: "{{ server_data_dir_group }}"
+
+- name: Setup rsync tasks for homepage config backup
+  ansible.builtin.cron:
+    name: "Homepage data backup"
+    special_time: "hourly"
+    job: "rsync -a -W --delete {{ homepage_config_path_local }}/ {{ homepage_config_path }}/"
+    user: "{{ server_data_dir_user }}"
 
 - name: Copy Docker compose template
   template:

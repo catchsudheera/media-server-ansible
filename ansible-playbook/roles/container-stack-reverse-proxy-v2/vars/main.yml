@@ -26,6 +26,7 @@ database_password: "{{ gv_database_password }}"
 
 
 # homepage
-homepage_proxy_manager_config_path: "{{ container_data_root }}/homepage/config"
+homepage_config_path: "{{ container_data_root }}/homepage/config"
+homepage_config_path_local: "{{ reverse_proxy_v2_stack_location }}/homepage/config_local"
 
 

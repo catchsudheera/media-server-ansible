@@ -43,13 +43,13 @@ services:
     image: ghcr.io/gethomepage/homepage:latest
     container_name: homepage
     environment:
-      - HOMEPAGE_ALLOWED_HOSTS=gethomepage.dev
+      - HOMEPAGE_ALLOWED_HOSTS=media-server.home
       - PUID={{ server_data_user_uid }}
       - PGID={{ server_data_group_gid }}
     ports:
       - 3000:3000
     volumes:
-      - {{ homepage_proxy_manager_config_path }}:/app/config
+      - {{ homepage_config_path_local }}:/app/config
       - /var/run/docker.sock:/var/run/docker.sock:ro
     restart: unless-stopped
     networks:
