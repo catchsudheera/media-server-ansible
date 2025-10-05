@@ -9,6 +9,8 @@ services:
       - PORT=5055
     ports:
       - 5055:5055
+    networks:
+      - media_server_network
     volumes:
       - {{ jellyseerr_config_path }}:/app/config
     restart: unless-stopped

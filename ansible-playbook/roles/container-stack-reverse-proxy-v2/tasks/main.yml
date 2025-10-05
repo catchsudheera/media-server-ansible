@@ -1,0 +1,119 @@
+---
+- name: Create stack root directory
+  file:
+    path: "{{ reverse_proxy_v2_stack_location }}"
+    state: directory
+    owner: "{{ server_data_dir_user }}"
+    group: "{{ server_data_dir_group }}"
+
+- name: Create Nginx Proxy Manager Server directories
+  file:
+    path: "{{ nginx_proxy_manager_config_path }}"
+    state: directory
+    owner: "{{ server_data_dir_user }}"
+    group: "{{ server_data_dir_group }}"
+
+- name: Create Nginx Proxy Manager Server database data directories - nfs mounted
+  file:
+    path: "{{ nginx_proxy_manager_database_path }}"
+    state: directory
+    owner: "{{ server_data_dir_user }}"
+    group: "{{ server_data_dir_group }}"
+
+- name: Create Nginx Proxy Manager Server database data directories - local
+  file:
+    path: "{{ nginx_proxy_manager_database_path_local }}"
+    state: directory
+    owner: "{{ server_data_dir_user }}"
+    group: "{{ server_data_dir_group }}"
+
+# The reason for the following config because postgres database does not work well with NFS mounts directly. As a workaround
+# we use a local directory with postgres container and keep syncing it to the NFS mount using rsync
+- name: Initial Copy of the Postgres data from NFS to local
+  copy:
+    src: "{{ nginx_proxy_manager_database_path }}/"
+    dest: "{{ nginx_proxy_manager_database_path_local }}/"
+    remote_src: true
+    owner: "{{ server_data_dir_user }}"
+    group: "{{ server_data_dir_group }}"
+
+- name: Setup rsync tasks for Postgres config backup
+  ansible.builtin.cron:
+    name: "Postgres data backup"
+    special_time: "hourly"
+    job: "rsync -a -W --delete {{ nginx_proxy_manager_database_path_local }}/ {{ nginx_proxy_manager_database_path }}/"
+    user: "{{ server_data_dir_user }}"
+
+- name: Create Nginx Proxy Manager Let's encrypt dir
+  file:
+    path: "{{ nginx_proxy_manager_lets_encrypt_path }}"
+    state: directory
+    owner: "{{ server_data_dir_user }}"
+    group: "{{ server_data_dir_group }}"
+
+- name: Create homepage data directories
+  file:
+    path: "{{ homepage_config_path }}"
+    state: directory
+    owner: "{{ server_data_dir_user }}"
+    group: "{{ server_data_dir_group }}"
+
+- name: Create homepage data directories - local
+  file:
+    path: "{{ homepage_config_path_local }}"
+    state: directory
+    owner: "{{ server_data_dir_user }}"
+    group: "{{ server_data_dir_group }}"
+
+- name: Initial Copy of the homepage data from NFS to local
+  copy:
+    src: "{{ homepage_config_path }}/"
+    dest: "{{ homepage_config_path_local }}/"
+    remote_src: true
+    owner: "{{ server_data_dir_user }}"
+    group: "{{ server_data_dir_group }}"
+
+- name: Setup rsync tasks for homepage config backup
+  ansible.builtin.cron:
+    name: "Homepage data backup"
+    special_time: "hourly"
+    job: "rsync -a -W --delete {{ homepage_config_path_local }}/ {{ homepage_config_path }}/"
+    user: "{{ server_data_dir_user }}"
+
+- name: Copy Docker compose template
+  template:
+    src: docker-compose.yml.j2
+    dest: "{{ reverse_proxy_v2_stack_location }}/docker-compose.yml"
+    owner: "{{ server_data_dir_user }}"
+    group: "{{ server_data_dir_group }}"
+
+- name: Start Docker containers using docker-compose
+  community.docker.docker_compose_v2:
+    project_src: "{{ reverse_proxy_v2_stack_location }}"
+  tags: start-stacks
+
+- name: Adding the Systemd units for docker-compose management
+  import_role:
+    name: docker-compose-systemd
+  vars:
+    docker_compose_dir_path: "{{ reverse_proxy_v2_stack_location }}"
+    stack_name: container-stack-reverse-proxy-v2
+
+- name: Stop Docker containers if running
+  block:
+    - name: Check whether the docker file exist
+      stat:
+        path: "{{ reverse_proxy_v2_stack_location }}/docker-compose.yml"
+      register: reverse_proxy_v2_stack_location_docker_compose_file
+
+    - name: Check validity of compose file
+      shell: "docker compose -f {{ reverse_proxy_v2_stack_location }}/docker-compose.yml config"
+      register: wg_server_container_stack_docker_compose_file_validate
+      ignore_errors: yes
+
+    - name: Stopping using docker compose
+      community.docker.docker_compose_v2:
+        project_src: "{{ reverse_proxy_v2_stack_location }}"
+        state: absent
+      when: reverse_proxy_v2_stack_location_docker_compose_file.stat.exists and wg_server_container_stack_docker_compose_file_validate.failed|bool != true
+  tags: [ 'never', 'stop-stacks' ]

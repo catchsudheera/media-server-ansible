@@ -46,19 +46,11 @@ gv_add_vpn_container: false
 #gv_vpn_server_end_point: nl2.napps-6.com:51820
 #gv_vpn_server_public_key: 4cd/R76wKhWUUaKzCgn7TcjEgaFbiHyZVOI4JzoPDyc=
 
-# Reverse Proxy
-gv_server_domain_name: my-hostname.duckdns.org
-gv_notification_email: myemail@gmail.com
 
-# Following has to set to false once initial testing is done
-gv_use_lets_encrypt_staging_server: true
+## Reverse proxy v2
+# NPM
+gv_database_username: npm_user
+gv_database_password: <generated-password>
 
-# DNS
-gv_duckdns_token: 69569af6-57bb-4bef-a13b-5bb2c4807502
 
-# Dashboard
-gv_authelia_enable: true
-gv_dashboard_username: my-username
-gv_dashboard_password: my-password
-gv_dashboard_user_email: myemail@gmail.com
 
