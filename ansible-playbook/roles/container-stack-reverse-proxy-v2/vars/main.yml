@@ -18,7 +18,6 @@ docker_network_name: "{{ gv_docker_network_name }}"
 # Nginx Proxy manager
 nginx_proxy_manager_config_path: "{{ container_data_root }}/nginx_proxy_manager/config"
 nginx_proxy_manager_database_path: "{{ container_data_root }}/nginx_proxy_manager/database"
-nginx_proxy_manager_database_path_local: "{{ reverse_proxy_v2_stack_location }}/nginx_proxy_manager/database_local"
 nginx_proxy_manager_lets_encrypt_path: "{{ container_data_root }}/nginx_proxy_manager/lets_encrypt"
 
 database_username: "{{ gv_database_username }}"
