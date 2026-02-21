@@ -5,7 +5,7 @@ transmission:
   environment:
     - PUID={{ server_data_user_uid }}
     - PGID={{ server_data_group_gid }}
-    - TZ={{ server_timezone}}
+    - TZ={{ server_timezone }}
   volumes:
     - {{ transmission_config_path }}:/config
     - {{ transmission_download_path }}:/downloads
@@ -29,7 +29,7 @@ qbittorrent:
   environment:
     - PUID={{ server_data_user_uid }}
     - PGID={{ server_data_group_gid }}
-    - TZ={{ server_timezone}}
+    - TZ={{ server_timezone }}
     - WEBUI_PORT=8080
   volumes:
     - {{ qbittorrent_config_path }}:/config

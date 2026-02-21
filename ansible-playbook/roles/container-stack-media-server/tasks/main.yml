@@ -17,6 +17,13 @@
     - "{{ qbittorrent_config_path }}"
   when: qbittorrent_enable|bool == true
 
+- name: Create vpn config directory
+  file:
+    path: "{{ vpn_config_path }}"
+    state: directory
+    owner: "{{ server_data_dir_user }}"
+    group: "{{ server_data_dir_group }}"
+
 - name: Install 7z to unpack rar files
   apt:
     name: [p7zip-full, p7zip]
