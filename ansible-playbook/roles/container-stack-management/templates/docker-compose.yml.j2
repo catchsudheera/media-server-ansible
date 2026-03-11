@@ -14,20 +14,20 @@ services:
       - AUTOHEAL_INTERVAL=30
       - CURL_TIMEOUT=30
       - AUTOHEAL_CONTAINER_LABEL=all
-  portainer:
-    image: portainer/portainer-ce
-    container_name: portainer
-    networks:
-      - media_server_network
-    command: -H unix:///var/run/docker.sock
-    restart: always
-    ports:
-      - 8005:8000
-      - 9005:9000
+  dockhand-hawser:
+    image: fnsys/hawser:latest
+    container_name: dockhand-hawser
+    environment:
+      - DOCKHAND_SERVER_URL={{ dockhand_server_url }}
+      - TOKEN={{ dockhand_server_token }}
+      - AGENT_NAME={{ dockhand_agent_name }}
+      - SKIP_DF_COLLECTION=false
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - {{ portainer_config_path }}:/data
-
+      - {{ dockhand_hawser_config_path }}:/data/stacks
+    networks:
+      - media_server_network
+    restart: always
 networks:
   media_server_network:
     external:

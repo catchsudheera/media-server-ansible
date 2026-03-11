@@ -12,5 +12,5 @@ docker_bridge_network_name: "{{ gv_docker_bridge_network_name }}"
 container_data_root: "{{ gv_container_data_root }}"
 monitoring_container_stack_location: "{{ gv_local_media_user_home }}/.container-stack-monitoring"
 
-# Portainer
+# Uptime Kuma
 uptime_kuma_config_path: "{{ container_data_root }}/uptime_kuma/config"

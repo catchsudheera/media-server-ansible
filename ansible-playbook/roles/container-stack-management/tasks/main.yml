@@ -6,9 +6,9 @@
     owner: "{{ server_data_dir_user }}"
     group: "{{ server_data_dir_group }}"
 
-- name: Create portainer directories
+- name: Create dockhand-hawser directories
   file:
-    path: "{{ portainer_config_path }}"
+    path: "{{ dockhand_hawser_config_path }}"
     state: directory
     owner: "{{ server_data_dir_user }}"
     group: "{{ server_data_dir_group }}"
