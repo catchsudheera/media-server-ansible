@@ -22,7 +22,7 @@
   tags: version_1.0.1
 
 - name: Start Docker containers using docker-compose
-  community.docker.docker_compose:
+  community.docker.docker_compose_v2:
     project_src: "{{ management_container_stack_location }}"
   tags: start-stacks
 
@@ -47,7 +47,7 @@
       ignore_errors: yes
 
     - name: Stopping using docker compose
-      community.docker.docker_compose:
+      community.docker.docker_compose_v2:
         project_src: "{{ management_container_stack_location }}"
         state: absent
       when: management_container_stack_location_docker_compose_file.stat.exists and management_container_stack_docker_compose_file_validate.failed|bool != true

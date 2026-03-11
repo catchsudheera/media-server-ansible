@@ -156,7 +156,7 @@
     user: "{{ server_data_dir_user }}"
 
 - name: Start Docker containers using docker-compose
-  community.docker.docker_compose:
+  community.docker.docker_compose_v2:
     project_src: "{{ media_server_container_stack_location }}"
   tags: start-stacks
 
@@ -181,7 +181,7 @@
       ignore_errors: yes
 
     - name: Stopping using docker compose
-      community.docker.docker_compose:
+      community.docker.docker_compose_v2:
         project_src: "{{ media_server_container_stack_location }}"
         state: absent
       when: media_server_container_stack_location_docker_compose_file.stat.exists and media_server_container_stack_docker_compose_file_validate.failed|bool != true
