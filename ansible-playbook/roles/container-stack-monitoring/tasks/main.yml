@@ -21,7 +21,7 @@
     group: "{{ server_data_dir_group }}"
 
 - name: Start Docker containers using docker-compose
-  community.docker.docker_compose:
+  community.docker.docker_compose_v2:
     project_src: "{{ monitoring_container_stack_location }}"
   tags: start-stacks
 
@@ -46,7 +46,7 @@
       ignore_errors: yes
 
     - name: Stopping using docker compose
-      community.docker.docker_compose:
+      community.docker.docker_compose_v2:
         project_src: "{{ monitoring_container_stack_location }}"
         state: absent
       when: monitoring_container_stack_location_docker_compose_file.stat.exists and monitoring_container_stack_docker_compose_file_validate.failed|bool != true
