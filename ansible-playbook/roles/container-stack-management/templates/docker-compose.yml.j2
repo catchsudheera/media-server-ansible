@@ -1,19 +1,6 @@
 version: "3.8"
 
 services:
-  autoheal:
-    image: willfarrell/autoheal
-    container_name: autoheal
-    networks:
-      - media_server_network
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /etc/localtime:/etc/localtime:ro
-    restart: always
-    environment:
-      - AUTOHEAL_INTERVAL=30
-      - CURL_TIMEOUT=30
-      - AUTOHEAL_CONTAINER_LABEL=all
   dockhand-hawser:
     image: fnsys/hawser:latest
     container_name: dockhand-hawser
