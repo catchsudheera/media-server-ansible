@@ -1,12 +1,14 @@
 version: "3.8"
 
 services:
-  jellyseerr:
-    image: fallenbagel/jellyseerr:latest
-    container_name: jellyseerr
+  seerr:
+    image: ghcr.io/seerr-team/seerr:latest
+    container_name: seerr
     environment:
       - TZ={{ server_timezone }}
       - PORT=5055
+      - PUID={{ server_data_user_uid }}
+      - PGID={{ server_data_group_gid }}
     ports:
       - 5055:5055
     networks:
@@ -14,6 +16,12 @@ services:
     volumes:
       - {{ jellyseerr_config_path }}:/app/config
     restart: unless-stopped
+    healthcheck:
+          test: wget --no-verbose --tries=1 --spider http://localhost:5055/api/v1/status || exit 1
+          start_period: 20s
+          timeout: 3s
+          interval: 15s
+          retries: 3
   sonarr:
     image: lscr.io/linuxserver/sonarr
     container_name: sonarr
