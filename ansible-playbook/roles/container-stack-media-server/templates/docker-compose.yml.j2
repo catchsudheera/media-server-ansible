@@ -82,11 +82,11 @@ services:
     ports:
      - 9117:9117
     healthcheck:
-      test: ["CMD-SHELL", "curl -s -X GET -I  http://localhost:9117/UI/Login | grep '200 OK' || exit 1"]
-      interval: 2m
-      timeout: 30s
-      retries: 10
-      start_period: 2m
+      test: ["CMD-SHELL", "curl -f http://localhost:9117/UI/Dashboard || exit 1"]
+      interval: 1m
+      timeout: 10s
+      retries: 3
+      start_period: 90s
     restart: always
   flaresolverr:
     image: ghcr.io/flaresolverr/flaresolverr
