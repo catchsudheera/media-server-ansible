@@ -15,6 +15,15 @@ services:
     networks:
       - media_server_network
     restart: always
+  autoheal:
+    container_name: autoheal
+    environment:
+      AUTOHEAL_CONTAINER_LABEL: all
+    image: willfarrell/autoheal:latest
+    restart: always
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock
 networks:
   media_server_network:
     external:
